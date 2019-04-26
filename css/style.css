@@ -1,14 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+body {
+  overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+  color: #505962;
+}
+/* To pass tests with overlay */
+.landing h1 {
+  display: none;
+}
+
+.offset::before {
+  display: block;
+  content: "";
+  height: 4rem;
+  margin-top: -4rem;
+}
+
+.turq {
+  color: #1ebba3;
+}
+.btn  {
+  z-index: 1000!important;
+} 
+
+/*------***** Pulsing Glow *** ------ */
+
+@keyframes glow-pulse
+{
+     0% {
+          text-shadow: 0 0 0 white;
+     }
+    50%  {
+          text-shadow: .1rem .1rem .5rem white;
+    }
+     100% {
+          text-shadow: 0 0 0 white;
+     }
+}
 
 
 
 
+/* ----- NAVIGATION ----- */
+.navbar {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.1rem;
+  background: rgba(0,0,0,0.8)!important;
+}
 
-/*============= COURSE SECTION =============*/
+.navbar-brand {
+  font-family: 'Dancing Script', cursive;
+  text-transform: capitalize;
+  font-size:28px;
+  font-weight: 400;
+  letter-spacing: 0.001rem;
+  color: white;
+  padding-left: 1.2rem;
+}
 
+.navbar-nav li  {
+  padding-right: 0.7rem;
+}
+
+.navbar-dark .navbar-nav .nav-link  {
+  color: white;
+  padding-top: 0.8rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover  {
+  color: #1ebba3;
+}
+
+/* ------ Landing Page ------*/
+#welcome-section  {
+  height: 100vh;
+}
+
+.home-inner {
+  background-image: url(https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/image.jpg);
+}
+
+.caption  {
+  width: 100%;
+  max-width: 100%;
+  position: absolute;
+  top: 38%;
+  z-index: 1;
+  color: white;
+}
+.caption h1  {
+  font-size: 3.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15rem;
+  text-shadow: .1rem .1rem .8rem black;
+  padding-bottom: 1rem;
+}
+.caption h3 {
+  font-size: 2rem;
+  text-shadow: .1rem .1rem .5rem black;
+  padding-bottom: 1.6rem;
+}
+.btn-lg {
+  border-width: medium;
+  border-radius: 0;
+  font-size: 1.1rem;
+}
+
+.email  {
+  font-size: 20px;
+}
+
+
+/*============= Middle Sections =============*/
+
+.less-narrow {
+  width: 90%;
+  margin: 1.5rem auto;
+  padding-top: 2rem;
+  text-align: center;
+}
 .narrow {
   width: 75%;
   margin: 1.5rem auto;
   padding-top: 2rem;
+  text-align: center;
 }
 .narrow h1 {
     font-size: 2.4rem;
@@ -31,6 +151,134 @@
   color: white;
 }
 
+/* =============== Skills Section ================= */
+
+#skills {
+  margin-top: 3rem;
+  margin-bottom: 6rem;
+}
+
+
+/* -------------- Projects Section --------------- */
+.heading-underline  {
+  width: 5rem;
+  height: .2rem;
+  background-color: #1ebba3;
+  margin: 1rem auto 1rem;
+}
+
+#projects {
+  background-color: #c6fff6;
+  padding-bottom: 3rem; 
+}
+
+.project-tile img {
+  max-width: 100%;
+  height: auto;
+}
+.project-tile a {
+  color: #505962;
+  margin: 2rem;
+}
+.project-tile a:hover {
+  color: #1ebba3;
+  text-decoration: none;
+}
+.project-tile h3  {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+
+/* --------- Certifications Section -------- */
+#certifications {
+  margin-bottom: 4rem;
+}
+#certifications a {
+  color: #505962;
+}
+#certifications a:hover {
+  color: #1ebba3;
+  text-decoration: none;
+}
+
+#certifications h2  {
+  font-size: 2.4rem;
+}
+#certifications h3  {
+  font-size: 1.3rem;
+}
+#certifications img {
+  max-width: 80%;
+  margin-top: 1.2rem;
+}
+
+/* ----- Footer ---- */
+/* --- FontAwesome Icons ----- */
+footer  {
+  background-color: #40474e;
+  height: 100vh;
+  color: white;
+}
+
+.brand {
+  display: inline-block;
+  font-family: 'Dancing Script', cursive;
+  text-transform: capitalize;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  color: white;
+  text-shadow: .1rem .1rem .8rem black;
+  padding-left: 1.2rem;
+  padding-bottom: 1rem;
+  padding-top: 20%;
+}
+
+.email  {
+  font-size: 1.5rem;
+  animation: glow-pulse 4s infinite;
+  padding-bottom: 1.6rem;
+}
+
+footer a  {
+  display: inline-block;
+  color: white;
+}
+footer a:hover {
+  color: #1ebba3;
+  text-decoration: none;
+}
+footer svg.svg-inline--fa {
+  margin: 1.2rem .8rem;
+}
+svg.svg-inline--fa:hover {
+  color: #1ebba3;
+}
+#email-md  {
+  display: inline-block;
+  font-size: 1.5rem;
+  padding-top: 1.6rem;
+  padding-bottom: 1.2rem;
+}
+
+#email-head  {
+  font-size: 2rem;
+}
+
+/* ----- ***** Media Queries ***** ------ */
+@media (max-width: 767px){
+  
+  #email{
+    font-size: 20px;
+  }
+  
+}
+
+
+
+
+
 
 /*============ BOOTSTRAP BREAK POINTS:
 
@@ -50,3 +298,89 @@ Extra (xl) large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) { ... }
 
 =============*/
+
+
+
+@media(max-width: 600px) {
+  
+
+  #contact {
+    height: 50vh;
+  }
+  
+}
+
+/*--- Extra Bootstrap Column Padding --*/
+[class*="col-"] {
+  padding: 1rem;
+}
+
+/*--- Bootstrap Mobile Gutter Fix --*/
+.row, .container-fluid {
+margin-left: 0px!important;
+margin-right: 0px!important;
+}
+
+/*--- Fix for Fixed Navbar jumping on scroll --*/
+.fixed-top  {
+ -webkit-backface-visibility: hidden;
+}
+
+
+/*--- Fixed Landing Page Section For Mobile --*/
+.landing {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: table;
+  z-index: -1;
+}
+.home-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.home-inner {
+  position: fixed;
+  display: table;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  will-change: transform;
+}
+
+/*--- iOS Fixed Background Image --*/
+.fixed-background {
+  position: relative;
+  width: 100%;
+}
+.fixed-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -999!important;
+}
+.fixed {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  will-change: transform;
+}

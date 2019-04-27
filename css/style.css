@@ -86,6 +86,7 @@ body {
 }
 
 .caption  {
+  word-spacing: 6px;
   width: 100%;
   max-width: 100%;
   position: absolute;
@@ -152,6 +153,13 @@ body {
 }
 
 /* =============== Skills Section ================= */
+a {
+  color: #1ebba3;
+}
+a:hover {
+  text-decoration: none;
+  color: #1ebba3;
+}
 
 #skills {
   margin-top: 3rem;

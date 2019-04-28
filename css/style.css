@@ -204,8 +204,11 @@ a:hover {
 #certifications {
   margin-bottom: 4rem;
 }
+#certifications h2 {
+  color: #125312;
+}
 #certifications a {
-  color: #505962;
+  color: #125312;
 }
 #certifications a:hover {
   color: #0ebeff;
@@ -218,9 +221,18 @@ a:hover {
 #certifications h3  {
   font-size: 1.3rem;
 }
+
+
 #certifications img {
   max-width: 80%;
   margin-top: 1.2rem;
+}
+#certifications img:hover {
+  transform: scale(1.1);
+  margin-top: 1.2rem;
+}
+.zoom:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 /* ----- Footer ---- */

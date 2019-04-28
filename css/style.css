@@ -19,7 +19,8 @@ body {
 }
 
 .turq {
-  color: #1ebba3;
+  /*color: #1ebba3;*/
+  color: #0ebeff;
 }
 .btn  {
   z-index: 1000!important;
@@ -73,7 +74,7 @@ body {
 
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .nav-link:hover  {
-  color: #1ebba3;
+  color: #0ebeff;
 }
 
 /* ------ Landing Page ------*/
@@ -141,24 +142,25 @@ body {
   font-size: 1.2rem;
   text-transform: uppercase;
   margin: 1rem;
-  border-color: #1EBBA3;
-  background-color: #1EBBA3;
+  border-color: #0ebeff;
+  background-color: #0ebeff;
   color: white;
 }
 .btn-secondary:hover,
 .btn-secondary:focus {
-  border-color: #189582;
-  background-color: #189582;
+  color: #0ebeff;
+  border-color: #053a4e;
+  background-color: #053a4e;
   color: white;
 }
 
 /* =============== Skills Section ================= */
 a {
-  color: #1ebba3;
+  color: #0ebeff;
 }
 a:hover {
   text-decoration: none;
-  color: #1ebba3;
+  color: #053a4e;
 }
 
 #skills {
@@ -171,12 +173,12 @@ a:hover {
 .heading-underline  {
   width: 5rem;
   height: .2rem;
-  background-color: #1ebba3;
+  background-color: #0ebeff;
   margin: 1rem auto 1rem;
 }
 
 #projects {
-  background-color: #c6fff6;
+  background-color: #dff6ff;
   padding-bottom: 3rem; 
 }
 
@@ -189,7 +191,7 @@ a:hover {
   margin: 2rem;
 }
 .project-tile a:hover {
-  color: #1ebba3;
+  color: #0ebeff;
   text-decoration: none;
 }
 .project-tile h3  {
@@ -206,7 +208,7 @@ a:hover {
   color: #505962;
 }
 #certifications a:hover {
-  color: #1ebba3;
+  color: #0ebeff;
   text-decoration: none;
 }
 
@@ -254,14 +256,14 @@ footer a  {
   color: white;
 }
 footer a:hover {
-  color: #1ebba3;
+  color: #0ebeff;
   text-decoration: none;
 }
 footer svg.svg-inline--fa {
   margin: 1.2rem .8rem;
 }
 svg.svg-inline--fa:hover {
-  color: #1ebba3;
+  color: #0ebeff;
 }
 #email-md  {
   display: inline-block;

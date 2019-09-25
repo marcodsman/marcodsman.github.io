@@ -298,7 +298,22 @@
 <script
         src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/js/all.min.js">
 </script>
-<script src="./js/expand.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  // Hide extra projects
+  $(".extra-projects").hide();
+  
+  $(".more-less").click(function(){
+    if($(".more-less-text").text() == "More"){
+      $(".more-less-text").text("Less");
+      $(".extra-projects").show();
+    } else {
+      $(".more-less-text").text("More");
+      $(".extra-projects").hide();
+    }
+  });
+});
+</script>
 <script src="//code.tidio.co/gt2e6op8m79e3bngijzyr8r81vfojlic.js"></script><!-- Tidio chatbot -->
 </body>
 

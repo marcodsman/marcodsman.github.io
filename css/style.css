@@ -203,6 +203,10 @@ a:hover {
   border: 1px solid grey;
 }
 
+.extra-projects {
+  
+}
+
 
 /* --------- Certifications Section -------- */
 #certifications {
@@ -271,6 +275,7 @@ footer a  {
   display: inline-block;
   color: white;
 }
+
 footer a:hover {
   color: #0ebeff;
   text-decoration: none;
@@ -278,6 +283,17 @@ footer a:hover {
 footer svg.svg-inline--fa {
   margin: 1.2rem .8rem;
 }
+footer .iconify {
+  margin: 1.2rem .8rem;
+}
+
+footer .icon {
+  vartical-align: initial;
+  margin-bottom: 3.8rem;
+  margin-left: 1rem;
+  display: inline-block
+}
+
 svg.svg-inline--fa:hover {
   color: #0ebeff;
 }

@@ -1,0 +1,24 @@
+{
+  "name": "French Roulette Trainer",
+  "short_name": "Roulette",
+  "description": "Drill the French roulette wheel sequence, sectors, payouts and procedures.",
+  "start_url": "/roulette-trainer/",
+  "scope": "/roulette-trainer/",
+  "display": "standalone",
+  "background_color": "#06120d",
+  "theme_color": "#20c875",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

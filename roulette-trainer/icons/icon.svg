@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#06120d"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#20c875" stroke-width="18"/>
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#2e6044" stroke-width="8"/>
+  <circle cx="256" cy="256" r="28" fill="#20c875"/>
+  <!-- wheel spokes -->
+  <line x1="256" y1="56" x2="256" y2="456" stroke="#2e6044" stroke-width="5"/>
+  <line x1="56" y1="256" x2="456" y2="256" stroke="#2e6044" stroke-width="5"/>
+  <line x1="114" y1="114" x2="398" y2="398" stroke="#2e6044" stroke-width="5"/>
+  <line x1="398" y1="114" x2="114" y2="398" stroke="#2e6044" stroke-width="5"/>
+  <!-- zero pocket highlight -->
+  <circle cx="256" cy="72" r="22" fill="#07884a"/>
+  <text x="256" y="79" text-anchor="middle" font-family="system-ui" font-weight="900" font-size="22" fill="white">0</text>
+</svg>

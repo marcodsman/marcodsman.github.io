@@ -11,6 +11,8 @@ function setView(nextView) {
   wheelGame = null;
   chunkDrill = null;
   chainDrill = null;
+  if (typeof colourDrill !== "undefined") colourDrill = null;
+  if (typeof neighbourDrill !== "undefined") neighbourDrill = null;
 
   tabs.forEach(tab => tab.classList.toggle("active", tab.dataset.view === view));
 

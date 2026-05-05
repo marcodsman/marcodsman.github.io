@@ -917,9 +917,10 @@ function renderWheelTrainer() {
 
     <h3 class="section-title" style="margin-top:20px;">Other drills</h3>
     <div class="diff-row" style="flex-wrap:wrap;gap:8px;">
-      <button class="blue"  id="startNeighbour">Neighbour chains</button>
-      <button class="ghost" id="startSpeed">Speed mode (full wheel)</button>
-      <button class="ghost" id="wheelPractice">Wheel Q&amp;A</button>
+      <button class="primary" id="startColour">Red or Black? (chunked)</button>
+      <button class="blue"    id="startNeighbour">Neighbour chains</button>
+      <button class="ghost"   id="startSpeed">Speed mode (full wheel)</button>
+      <button class="ghost"   id="wheelPractice">Wheel Q&amp;A</button>
     </div>
   `;
 
@@ -976,6 +977,7 @@ function renderWheelTrainer() {
   const weakBtn = document.querySelector("#missingWeak");
   if (weakBtn) weakBtn.onclick = () => startWheelPlacementGame(weakSlotIndices, {});
 
+  document.querySelector("#startColour").onclick = renderColourMenu;
   document.querySelector("#startNeighbour").onclick = startNeighbourDrill;
   document.querySelector("#startSpeed").onclick = startSpeedMode;
   document.querySelector("#wheelPractice").onclick = () => {
@@ -1127,4 +1129,254 @@ function wheelSlotContext(slotIndex) {
   const right = WHEEL[(wi + 1) % WHEEL.length];
   const sectorStr = sector ? ` · Sector: ${sector.shortName}` : "";
   return `Neighbours: ${left} — ${n} — ${right}${sectorStr}`;
+}
+
+// ---------------------------------------------------------------------------
+// Colour drill — red or black? Chunked by tens to expose the pattern.
+// ---------------------------------------------------------------------------
+
+const COLOUR_CHUNKS = [
+  {
+    id: "1-10",
+    label: "Numbers 1–10",
+    numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    desc: "Odds are red, evens are black — except the very last pair.",
+    pattern: "1–10: 1, 3, 5, 7, 9 are red. 2, 4, 6, 8 are black. Then it flips: 10 is black, 11 is black."
+  },
+  {
+    id: "11-18",
+    label: "Numbers 11–18",
+    numbers: [11, 12, 13, 14, 15, 16, 17, 18],
+    desc: "The pattern flips here: odds are black, evens are red.",
+    pattern: "11–18: odds (11, 13, 15, 17) are black. Evens (12, 14, 16, 18) are red."
+  },
+  {
+    id: "19-28",
+    label: "Numbers 19–28",
+    numbers: [19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+    desc: "Pattern flips back: odds are red, evens are black — same as 1–10.",
+    pattern: "19–28 mirrors 1–10. Odds red, evens black, then 28 is black and 29 is also black."
+  },
+  {
+    id: "29-36",
+    label: "Numbers 29–36",
+    numbers: [29, 30, 31, 32, 33, 34, 35, 36],
+    desc: "Pattern flips again: odds are black, evens are red — same as 11–18.",
+    pattern: "29–36 mirrors 11–18. Odds black, evens red."
+  },
+  {
+    id: "all",
+    label: "All 36 (final challenge)",
+    numbers: Array.from({ length: 36 }, (_, i) => i + 1),
+    desc: "Mix all four chunks together once you know each one.",
+    pattern: "Whole layout: pattern flips at 11 and again at 29. Inside each band, odd/even alternates colour."
+  }
+];
+
+let colourDrill = null;
+
+function renderColourMenu() {
+  wheelGame = null;
+  neighbourDrill = null;
+  colourDrill = null;
+
+  const content = document.querySelector("#content");
+  content.innerHTML = `
+    <div class="mode-label">Red or Black?</div>
+    <div class="question">Learn the colours in chunks</div>
+    <p class="tiny">
+      The colour pattern flips at 11 and again at 29. Take it ten at a time —
+      study a chunk, then drill it. Once each chunk feels easy, try the full layout.
+    </p>
+
+    <h3 class="section-title" style="margin-top:14px;">Pick a chunk</h3>
+    <div class="colour-chunk-grid" id="colourChunkGrid"></div>
+
+    <div class="actions" style="margin-top:18px;">
+      <button class="ghost" id="colourBack">Back to wheel menu</button>
+    </div>
+  `;
+
+  const grid = document.querySelector("#colourChunkGrid");
+  COLOUR_CHUNKS.forEach(chunk => {
+    const card = document.createElement("div");
+    card.className = "colour-chunk-card";
+    card.innerHTML = `
+      <div class="colour-chunk-title">${chunk.label}</div>
+      <div class="colour-chunk-desc">${chunk.desc}</div>
+      <div class="colour-chunk-strip">
+        ${chunk.numbers.map(n => `<span class="num ${numColor(n)}">${n}</span>`).join("")}
+      </div>
+    `;
+    card.onclick = () => renderColourStudy(chunk);
+    grid.appendChild(card);
+  });
+
+  document.querySelector("#colourBack").onclick = renderWheelTrainer;
+}
+
+function renderColourStudy(chunk) {
+  const content = document.querySelector("#content");
+
+  // Split into reds and blacks for visual contrast
+  const reds   = chunk.numbers.filter(n => REDS.has(n));
+  const blacks = chunk.numbers.filter(n => !REDS.has(n));
+
+  content.innerHTML = `
+    <div class="mode-label">Study — ${chunk.label}</div>
+    <div class="question">Look at the pattern</div>
+
+    <div class="colour-study-card">
+      <div class="tiny" style="margin-bottom:6px;"><strong>In order:</strong></div>
+      <div class="colour-study-row">
+        ${chunk.numbers.map(n => `<span class="num ${numColor(n)}">${n}</span>`).join("")}
+      </div>
+
+      <div class="tiny" style="margin-top:14px;color:#ff7c87;"><strong>Reds (${reds.length}):</strong></div>
+      <div class="colour-study-row">
+        ${reds.map(n => `<span class="num red">${n}</span>`).join("")}
+      </div>
+
+      <div class="tiny" style="margin-top:10px;"><strong>Blacks (${blacks.length}):</strong></div>
+      <div class="colour-study-row">
+        ${blacks.map(n => `<span class="num">${n}</span>`).join("")}
+      </div>
+
+      <div class="pattern-note">${chunk.pattern}</div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="csStart">Start drill →</button>
+      <button class="ghost"   id="csBack">Back to chunks</button>
+    </div>
+  `;
+
+  const speakBtn = makeSpeakButton(
+    "Read the chunk",
+    () => `${chunk.label}. ` + chunk.numbers.map(n => `${n} ${REDS.has(n) ? "red" : "black"}`).join(", ") + "."
+  );
+  content.querySelector(".colour-study-card").appendChild(speakBtn);
+
+  document.querySelector("#csStart").onclick = () => startColourDrill(chunk);
+  document.querySelector("#csBack").onclick  = renderColourMenu;
+}
+
+function startColourDrill(chunk) {
+  // Each number appears twice for repetition; shuffled.
+  const queue = shuffle([...chunk.numbers, ...chunk.numbers]);
+  colourDrill = {
+    chunk,
+    queue,
+    index: 0,
+    correct: 0,
+    wrong: 0,
+    showAnswer: false,
+    lastAnswer: null
+  };
+  renderColourDrill();
+}
+
+function renderColourDrill() {
+  if (!colourDrill) return;
+  const content = document.querySelector("#content");
+  const { chunk, queue, index, correct, wrong, showAnswer, lastAnswer } = colourDrill;
+
+  if (index >= queue.length) {
+    const total = queue.length;
+    const accuracy = Math.round((correct / total) * 100);
+    const passed = accuracy >= 90;
+    const bonus = Math.max(5, correct - wrong);
+    state.xp += bonus;
+    state.dailyXp += bonus;
+    studyStreakTick();
+    saveState();
+    updateStats();
+
+    content.innerHTML = `
+      <div class="mode-label">Colour Drill — ${chunk.label}</div>
+      <div class="question">${passed ? "Excellent!" : "Round complete"}</div>
+      <p class="tiny">
+        Correct: ${correct} / ${total} (${accuracy}%) · Mistakes: ${wrong}
+      </p>
+      <div class="pattern-note">${chunk.pattern}</div>
+      <div class="actions">
+        <button class="primary" id="cdAgain">Drill ${chunk.label} again</button>
+        <button class="blue"    id="cdNext">Pick another chunk</button>
+        <button class="ghost"   id="cdBack">Back to wheel menu</button>
+      </div>
+    `;
+    document.querySelector("#cdAgain").onclick = () => startColourDrill(chunk);
+    document.querySelector("#cdNext").onclick  = renderColourMenu;
+    document.querySelector("#cdBack").onclick  = renderWheelTrainer;
+    return;
+  }
+
+  const target = queue[index];
+  const isRed = REDS.has(target);
+  const total = queue.length;
+
+  let revealClass = "";
+  if (showAnswer) revealClass = isRed ? "reveal-red" : "reveal-black";
+
+  content.innerHTML = `
+    <div class="mode-label">Colour Drill — ${chunk.label}</div>
+    <div class="progress"><div class="bar" style="width:${Math.round(index / total * 100)}%"></div></div>
+    <p class="tiny">Question ${index + 1} of ${total} · Correct: ${correct} · Mistakes: ${wrong}</p>
+
+    <p class="tiny" style="text-align:center;margin:14px 0 0;">Is this number red or black?</p>
+    <div class="colour-target-num ${revealClass}">${target}</div>
+
+    ${showAnswer ? `
+      <p class="tiny" style="text-align:center;margin:6px 0 0;font-weight:850;color:${
+        lastAnswer === "correct" ? "var(--green)" : "var(--red)"
+      };">
+        ${lastAnswer === "correct" ? "✓ Correct" : "✗ No"} — ${target} is ${isRed ? "RED" : "BLACK"}.
+      </p>
+      <div class="actions" style="justify-content:center;margin-top:14px;">
+        <button class="primary" id="cdNext2">Next →</button>
+        <button class="ghost"   id="cdQuit">Stop drilling</button>
+      </div>
+    ` : `
+      <div class="colour-choice-row">
+        <button class="colour-choice-btn choice-red"   id="cdRed">RED</button>
+        <button class="colour-choice-btn choice-black" id="cdBlack">BLACK</button>
+      </div>
+      <div class="actions" style="justify-content:center;">
+        <button class="ghost" id="cdQuit">Stop drilling</button>
+      </div>
+    `}
+  `;
+
+  if (showAnswer) {
+    document.querySelector("#cdNext2").onclick = () => {
+      colourDrill.index++;
+      colourDrill.showAnswer = false;
+      colourDrill.lastAnswer = null;
+      renderColourDrill();
+    };
+  } else {
+    const answer = (chose) => {
+      const correctChoice = isRed ? "red" : "black";
+      if (chose === correctChoice) {
+        colourDrill.correct++;
+        colourDrill.lastAnswer = "correct";
+        state.xp += 1;
+        state.dailyXp += 1;
+        studyStreakTick();
+      } else {
+        colourDrill.wrong++;
+        colourDrill.lastAnswer = "wrong";
+        state.weakTopics.payouts = (state.weakTopics.payouts || 0) + 1;
+        state.hearts = Math.max(0, state.hearts - 1);
+      }
+      colourDrill.showAnswer = true;
+      saveState();
+      updateStats();
+      renderColourDrill();
+    };
+    document.querySelector("#cdRed").onclick   = () => answer("red");
+    document.querySelector("#cdBlack").onclick = () => answer("black");
+  }
+
+  document.querySelector("#cdQuit").onclick = renderColourMenu;
 }

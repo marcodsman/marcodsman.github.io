@@ -14,6 +14,8 @@ const defaultState = {
   weakQuestions: {},
   // per wheel-slot error counts: { [slotIndex]: errorCount }
   weakSlots: {},
+  // per-sector drill completion tracking: { [sectorId]: { bankClears: n, blindClears: n } }
+  sectorMastery: {},
   // SM-2 per-question records: { [id]: { interval, ef, due, lapses } }
   // interval = days until next review; ef = ease factor (>=1.3); due = ms timestamp
   sr: {}

@@ -4,11 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>French Roulette Trainer</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#20c875" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Roulette" />
   <style>
     :root {
       --bg:      #06120d;
@@ -495,6 +490,40 @@
     .drill-card-desc  { font-size: 0.83rem; color: var(--muted); line-height: 1.4; }
     .drill-card.sector-card-btn { border-color: transparent; }
 
+    /* --- sector learn cards --- */
+    .sector-learn-card {
+      background: #0d1f17;
+      border: 1.5px solid #1e3828;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .slc-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .slc-name { font-weight: 950; font-size: 1rem; }
+    .slc-desc { margin-bottom: 8px; }
+    .slc-nums { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+    .slc-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .slc-actions button { font-size: 0.82rem; padding: 6px 12px; }
+
+    /* mastery badges */
+    .mastery-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .badge-new      { background: #1e2a20; color: #4a7a55; }
+    .badge-practiced { background: #1a2e4a; color: #58a6ff; }
+    .badge-mastered  { background: #2a3a1a; color: #ffd166; }
+
     /* --- blind-mode keypad --- */
     .keypad {
       display: grid;
@@ -682,10 +711,5 @@
   <script src="js/reference.js"></script>
   <script src="js/session.js"></script>
   <script src="js/app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/roulette-trainer/sw.js');
-    }
-  </script>
 </body>
 </html>

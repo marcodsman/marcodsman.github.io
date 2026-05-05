@@ -30,6 +30,108 @@ function wedgePath(cx, cy, r1, r2, startDeg, endDeg) {
   ].join(" ");
 }
 
+function drawCircularWheelInto(wrap, opts) {
+  if (!wrap) return;
+  const { missingSlots = [], filled = {}, targetIndex = null, highlightNumbers = [], showSectorColors = false } = opts;
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", "0 0 500 500");
+  svg.setAttribute("class", "roulette-wheel-svg");
+  svg.setAttribute("xmlns", NS);
+
+  const defs = document.createElementNS(NS, "defs");
+
+  const rimGrad = document.createElementNS(NS, "radialGradient");
+  rimGrad.id = "rimGrad2";
+  rimGrad.innerHTML = `
+    <stop offset="0%"   stop-color="#a06820"/>
+    <stop offset="45%"  stop-color="#7a4e14"/>
+    <stop offset="100%" stop-color="#3d2408"/>
+  `;
+  defs.appendChild(rimGrad);
+
+  const hubGrad = document.createElementNS(NS, "radialGradient");
+  hubGrad.id = "hubGrad2";
+  hubGrad.innerHTML = `
+    <stop offset="0%"   stop-color="#245c38"/>
+    <stop offset="70%"  stop-color="#122e1c"/>
+    <stop offset="100%" stop-color="#080f0b"/>
+  `;
+  defs.appendChild(hubGrad);
+
+  const sheen = document.createElementNS(NS, "radialGradient");
+  sheen.id = "pocketSheen2";
+  sheen.setAttribute("cx", "50%"); sheen.setAttribute("cy", "30%");
+  sheen.setAttribute("r", "60%");
+  sheen.innerHTML = `
+    <stop offset="0%"  stop-color="rgba(255,255,255,0.07)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+  `;
+  defs.appendChild(sheen);
+
+  svg.appendChild(defs);
+
+  const rim = document.createElementNS(NS, "circle");
+  rim.setAttribute("cx", CX); rim.setAttribute("cy", CY); rim.setAttribute("r", R_OUTER);
+  rim.setAttribute("fill", "url(#rimGrad2)");
+  rim.setAttribute("stroke", "#5a3a0a"); rim.setAttribute("stroke-width", "3");
+  svg.appendChild(rim);
+
+  const sepOuter = document.createElementNS(NS, "circle");
+  sepOuter.setAttribute("cx", CX); sepOuter.setAttribute("cy", CY); sepOuter.setAttribute("r", R_POCKET_OUTER + 4);
+  sepOuter.setAttribute("fill", "none");
+  sepOuter.setAttribute("stroke", "#c8962a"); sepOuter.setAttribute("stroke-width", "3");
+  svg.appendChild(sepOuter);
+
+  const sepInner = document.createElementNS(NS, "circle");
+  sepInner.setAttribute("cx", CX); sepInner.setAttribute("cy", CY); sepInner.setAttribute("r", R_POCKET_INNER - 2);
+  sepInner.setAttribute("fill", "none");
+  sepInner.setAttribute("stroke", "#c8962a"); sepInner.setAttribute("stroke-width", "2.5");
+  svg.appendChild(sepInner);
+
+  const totalPockets = WHEEL.length;
+  const degPerPocket = 360 / totalPockets;
+
+  WHEEL.forEach((n, index) => {
+    const startDeg = index * degPerPocket - degPerPocket / 2;
+    const endDeg   = startDeg + degPerPocket;
+    const midDeg   = startDeg + degPerPocket / 2;
+
+    const path = document.createElementNS(NS, "path");
+    path.setAttribute("d", wedgePath(CX, CY, R_POCKET_INNER, R_POCKET_OUTER, startDeg, endDeg));
+    path.setAttribute("fill", showSectorColors
+      ? (() => { const s = SECTORS.find(sec => sec.numbers.includes(n)); return s ? s.color + "cc" : pocketColor(n); })()
+      : pocketColor(n));
+    path.setAttribute("stroke", "#0a0a0a");
+    path.setAttribute("stroke-width", "1");
+    svg.appendChild(path);
+
+    const [lx, ly] = polarToXY(CX, CY, R_NUM, midDeg);
+    const text = document.createElementNS(NS, "text");
+    text.setAttribute("class", `pocket-label${n === 0 ? " zero-label" : ""}`);
+    text.setAttribute("x", lx); text.setAttribute("y", ly);
+    text.setAttribute("transform", `rotate(${midDeg}, ${lx}, ${ly})`);
+    text.textContent = n;
+    svg.appendChild(text);
+  });
+
+  const bowl = document.createElementNS(NS, "circle");
+  bowl.setAttribute("cx", CX); bowl.setAttribute("cy", CY); bowl.setAttribute("r", R_POCKET_INNER - 3);
+  bowl.setAttribute("fill", "#0d2018");
+  bowl.setAttribute("stroke", "#c8962a"); bowl.setAttribute("stroke-width", "2");
+  svg.appendChild(bowl);
+
+  const hub = document.createElementNS(NS, "circle");
+  hub.setAttribute("cx", CX); hub.setAttribute("cy", CY); hub.setAttribute("r", R_HUB);
+  hub.setAttribute("fill", "url(#hubGrad2)");
+  hub.setAttribute("stroke", "#c8962a"); hub.setAttribute("stroke-width", "2.5");
+  svg.appendChild(hub);
+
+  wrap.innerHTML = "";
+  wrap.appendChild(svg);
+}
+
 function drawCircularWheel({ missingSlots = [], filled = {}, targetIndex = null, highlightNumbers = [], showSectorColors = false }) {
   const wrap = document.querySelector("#circleWheel");
   if (!wrap) return;
@@ -257,6 +359,7 @@ function startWheelPlacementGame(missingSlots, { blind = false, showSectorColors
     wrong: 0,
     showSectorColors,
     sectorId,
+    peeksLeft: blind ? 0 : 3,
     feedback: blind
       ? "Click a blank pocket on the wheel and type the number from memory."
       : "Select a number below, then click the matching blank space on the wheel."
@@ -275,10 +378,15 @@ function renderWheelPlacementGame() {
   const blind = wheelGame.mode === "blind";
   const modeLabel = blind ? "Blind Recall Drill" : "Wheel Placement Drill";
   const scaffold = wheelGame.showSectorColors;
+  const peeksLeft = wheelGame.peeksLeft !== undefined ? wheelGame.peeksLeft : 3;
+
+  const peekBtn = (!complete && !blind)
+    ? `<button class="ghost" id="peekWheel" ${peeksLeft === 0 ? "disabled" : ""}>Peek at full wheel (${peeksLeft} left)</button>`
+    : "";
 
   content.innerHTML = `
     <div class="mode-label">${modeLabel}</div>
-    <div class="question">${complete ? "Wheel complete" : blind ? "Place all numbers from memory" : "Place the missing numbers"}</div>
+    <div class="question">${complete ? "Drill complete!" : blind ? "Place all numbers from memory" : "Place the missing numbers"}</div>
 
     <div class="progress">
       <div class="bar" style="width:${Math.round((wheelGame.correct / wheelGame.missingSlots.length) * 100)}%"></div>
@@ -293,14 +401,15 @@ function renderWheelPlacementGame() {
     </div>
 
     <div class="feedback ${complete ? "good" : "neutral"}" id="wheelFeedback">
-      ${complete ? "Excellent. All numbers placed correctly." : wheelGame.feedback}
+      ${complete ? "All placed — great work!" : wheelGame.feedback}
     </div>
 
     <div class="actions">
       ${complete ? `
         <button class="primary" id="againWheel">Same drill again</button>
-        ${!blind ? `<button class="blue" id="goBlind">Round 2: Blind mode</button>` : ""}
+        ${!blind ? `<button class="blue" id="goBlind">Round 2: Blind mode ↗</button>` : ""}
       ` : ""}
+      ${peekBtn}
       <button class="ghost" id="showAnswerWheel">Show full wheel</button>
       <button class="ghost" id="backWheel">Back to wheel menu</button>
     </div>
@@ -309,9 +418,7 @@ function renderWheelPlacementGame() {
   drawCircularWheel({
     missingSlots: wheelGame.missingSlots,
     filled: wheelGame.filled,
-    targetIndex: wheelGame.mode === "bank" && wheelGame.selected !== null
-      ? wheelGame.missingSlots.find(i => WHEEL[i] === wheelGame.selected)
-      : null,
+    targetIndex: null,
     showSectorColors: scaffold
   });
 
@@ -326,6 +433,18 @@ function renderWheelPlacementGame() {
     state.xp += bonus;
     state.dailyXp += bonus;
     state.weakTopics.wheel = Math.max(0, (state.weakTopics.wheel || 0) - 2);
+
+    // Record sector mastery
+    if (wheelGame.sectorId) {
+      if (!state.sectorMastery) state.sectorMastery = {};
+      if (!state.sectorMastery[wheelGame.sectorId]) state.sectorMastery[wheelGame.sectorId] = { bankClears: 0, blindClears: 0 };
+      if (blind) {
+        state.sectorMastery[wheelGame.sectorId].blindClears++;
+      } else {
+        state.sectorMastery[wheelGame.sectorId].bankClears++;
+      }
+    }
+
     studyStreakTick();
     saveState();
     updateStats();
@@ -341,11 +460,40 @@ function renderWheelPlacementGame() {
     }
   }
 
+  const peekEl = document.querySelector("#peekWheel");
+  if (peekEl) {
+    peekEl.onclick = () => {
+      wheelGame.peeksLeft = peeksLeft - 1;
+      showPeekOverlay();
+    };
+  }
+
   document.querySelector("#showAnswerWheel").onclick = showFullWheel;
   document.querySelector("#backWheel").onclick = () => {
     wheelGame = null;
     renderWheelTrainer();
   };
+}
+
+function showPeekOverlay() {
+  const existing = document.querySelector("#peekOverlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "peekOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;";
+  overlay.innerHTML = `
+    <div style="color:#ffd166;font-size:13px;font-weight:700;letter-spacing:1px;">PEEK — closes in 3 seconds</div>
+    <div class="wheel-svg-wrap" id="peekCircleWheel" style="width:min(90vw,340px);height:min(90vw,340px);"></div>
+    <button class="ghost" id="closePeek" style="margin-top:8px;">Close</button>
+  `;
+  document.body.appendChild(overlay);
+
+  drawCircularWheelInto(document.querySelector("#peekCircleWheel"), { missingSlots: [], filled: {}, targetIndex: null });
+
+  const close = () => { overlay.remove(); renderWheelPlacementGame(); };
+  document.querySelector("#closePeek").onclick = close;
+  setTimeout(close, 3000);
 }
 
 // Bank mode: chip buttons
@@ -416,14 +564,14 @@ function blindEnterNumber(n) {
   if (n === correctNumber) {
     wheelGame.filled[slotIndex] = n;
     wheelGame.correct++;
-    wheelGame.feedback = `Correct — ${n} belongs there.`;
+    wheelGame.feedback = `✓ Correct! ${wheelSlotContext(slotIndex)}`;
     state.xp += 2;
     state.dailyXp += 2;
     studyStreakTick();
     state.weakSlots[slotIndex] = Math.max(0, (state.weakSlots[slotIndex] || 0) - 1);
   } else {
     wheelGame.wrong++;
-    wheelGame.feedback = `No — ${n} doesn't go there. The correct number is ${correctNumber}. Try that pocket again.`;
+    wheelGame.feedback = `✗ No — the answer is ${correctNumber}. ${wheelSlotContext(slotIndex)}`;
     state.weakSlots[slotIndex] = (state.weakSlots[slotIndex] || 0) + 3;
     state.weakTopics.wheel = (state.weakTopics.wheel || 0) + 2;
     state.hearts = Math.max(0, state.hearts - 1);
@@ -546,9 +694,7 @@ function renderSpeedMode() {
   drawCircularWheel({
     missingSlots: wheelGame.missingSlots,
     filled: wheelGame.filled,
-    targetIndex: wheelGame.selected !== null
-      ? wheelGame.missingSlots.find(i => WHEEL[i] === wheelGame.selected)
-      : null
+    targetIndex: null
   });
 
   renderNumberBank();
@@ -729,12 +875,18 @@ function renderNeighbourDrill() {
 // Main wheel trainer menu
 // ---------------------------------------------------------------------------
 
+function sectorMasteryBadge(sectorId) {
+  const m = (state.sectorMastery || {})[sectorId] || { bankClears: 0, blindClears: 0 };
+  if (m.blindClears >= 1) return { label: "Mastered", icon: "★", cls: "badge-mastered" };
+  if (m.bankClears >= 1)  return { label: "Practiced", icon: "◆", cls: "badge-practiced" };
+  return null;
+}
+
 function renderWheelTrainer() {
   wheelGame = null;
   neighbourDrill = null;
   if (speedTimer) { clearInterval(speedTimer); speedTimer = null; }
 
-  // Build weak slots list: top 5 most-errored slot indices
   const weakSlotIndices = Object.entries(state.weakSlots || {})
     .filter(([, count]) => count > 0)
     .sort(([, a], [, b]) => b - a)
@@ -744,88 +896,86 @@ function renderWheelTrainer() {
   const content = document.querySelector("#content");
   content.innerHTML = `
     <div class="mode-label">Wheel Trainer</div>
-    <div class="question">Build the wheel from memory</div>
-    <p class="tiny">
-      Start with a sector to learn a region, then drill it with or without the number bank.
-      Use colour scaffolding in round 1, then strip it for round 2.
-    </p>
+    <div class="question">Learn the wheel</div>
+    <p class="tiny">Start by studying a sector, then drill it. Work through all four sectors, then challenge yourself with the full wheel.</p>
 
-    <h3 class="section-title" style="margin-top:16px;">Place missing numbers</h3>
-    <p class="tiny">With number bank (recognition). Round 2 switches to blind recall.</p>
+    <h3 class="section-title" style="margin-top:18px;">Step 1 — Learn a sector</h3>
+    <p class="tiny">Pick a sector to study its numbers and position on the wheel, then drill it.</p>
+    <div id="sectorCards"></div>
 
-    <div class="diff-row">
-      <button class="primary" id="missingEasy3">Easy: 3 missing</button>
-      <button class="primary" id="missingEasy">Easy: 5 missing</button>
-      <button class="blue"    id="missingMedium">Medium: 10 missing</button>
-      <button class="danger"  id="missingHard">Hard: 18 missing</button>
+    <h3 class="section-title" style="margin-top:20px;">Step 2 — Full wheel drills</h3>
+    <p class="tiny">Once you know the sectors, mix them together.</p>
+    <div class="diff-row" style="flex-wrap:wrap;gap:8px;">
+      <button class="primary" id="missingEasy3">3 missing</button>
+      <button class="primary" id="missingEasy">5 missing</button>
+      <button class="blue"    id="missingMedium">10 missing</button>
+      <button class="danger"  id="missingHard">18 missing</button>
       ${weakSlotIndices.length >= 3
-        ? `<button class="ghost" id="missingWeak">Weak spots: ${weakSlotIndices.length}</button>`
+        ? `<button class="ghost" id="missingWeak">My weak spots (${weakSlotIndices.length})</button>`
         : ""}
     </div>
 
-    <h3 class="section-title" style="margin-top:18px;">Sector drills</h3>
-    <p class="tiny">Blank only that sector's pockets — learn one arc at a time.</p>
-    <div class="drill-grid" id="sectorDrillButtons"></div>
-
-    <h3 class="section-title" style="margin-top:18px;">Other drills</h3>
-    <div class="diff-row">
+    <h3 class="section-title" style="margin-top:20px;">Other drills</h3>
+    <div class="diff-row" style="flex-wrap:wrap;gap:8px;">
       <button class="blue"  id="startNeighbour">Neighbour chains</button>
       <button class="ghost" id="startSpeed">Speed mode (full wheel)</button>
       <button class="ghost" id="wheelPractice">Wheel Q&amp;A</button>
     </div>
-
-    <h3 class="section-title" style="margin-top:20px;">Highlight a sector on the wheel</h3>
-    <div class="actions" id="sectorHighlightButtons"></div>
-    <div id="sectorInfoBox"></div>
-
-    <div class="roulette-wheel-wrap" style="margin-top:16px;">
-      <div class="wheel-svg-wrap" id="circleWheel"></div>
-    </div>
   `;
 
-  drawCircularWheel({ missingSlots: [], filled: {}, targetIndex: null });
-
-  // Standard difficulty buttons
-  document.querySelector("#missingEasy3").onclick = () => {
-    const slots = randomMissingSlots(3);
-    startWheelPlacementGame(slots, { showSectorColors: false });
-  };
-  document.querySelector("#missingEasy").onclick = () => {
-    const slots = randomMissingSlots(5);
-    startWheelPlacementGame(slots, { showSectorColors: false });
-  };
-  document.querySelector("#missingMedium").onclick = () => {
-    const slots = randomMissingSlots(10);
-    startWheelPlacementGame(slots, { showSectorColors: false });
-  };
-  document.querySelector("#missingHard").onclick = () => {
-    const slots = randomMissingSlots(18);
-    startWheelPlacementGame(slots, { showSectorColors: false });
-  };
-
-  const weakBtn = document.querySelector("#missingWeak");
-  if (weakBtn) {
-    weakBtn.onclick = () => startWheelPlacementGame(weakSlotIndices, { showSectorColors: false });
-  }
-
-  // Sector drill cards
-  const sectorGrid = document.querySelector("#sectorDrillButtons");
+  // Sector cards — the centrepiece
+  const sectorCardsEl = document.querySelector("#sectorCards");
   SECTORS.forEach(sector => {
+    const badge = sectorMasteryBadge(sector.id);
+    const badgeHtml = badge
+      ? `<span class="mastery-badge ${badge.cls}">${badge.icon} ${badge.label}</span>`
+      : `<span class="mastery-badge badge-new">Not started</span>`;
+
     const card = document.createElement("div");
-    card.className = "drill-card";
-    card.style.borderColor = sector.color + "88";
+    card.className = "sector-learn-card";
+    card.style.borderColor = sector.color + "99";
     card.innerHTML = `
-      <div class="drill-card-title" style="color:${sector.color}">${sector.name}</div>
-      <div class="drill-card-desc">${sector.numbers.length} numbers — blank them all, with sector colours shown</div>
+      <div class="slc-header">
+        <span class="slc-name" style="color:${sector.color}">${sector.name}</span>
+        ${badgeHtml}
+      </div>
+      <div class="slc-desc tiny">${sector.description}</div>
+      <div class="slc-nums">${sector.numbers.map(n => `<span class="num ${numColor(n)}">${n}</span>`).join("")}</div>
+      <div class="slc-actions">
+        <button class="ghost slc-study" data-id="${sector.id}">Study</button>
+        <button class="primary slc-bank" data-id="${sector.id}">Drill with bank</button>
+        <button class="blue slc-blind" data-id="${sector.id}">Blind recall</button>
+      </div>
     `;
-    card.onclick = () => {
-      const slots = sector.numbers.map(n => WHEEL.indexOf(n));
-      startWheelPlacementGame(slots, { showSectorColors: true, sectorId: sector.id });
-    };
-    sectorGrid.appendChild(card);
+    sectorCardsEl.appendChild(card);
   });
 
-  // Neighbour + speed + Q&A
+  // Wire sector card buttons
+  sectorCardsEl.addEventListener("click", e => {
+    const btn = e.target.closest("button[data-id]");
+    if (!btn) return;
+    const sector = SECTORS.find(s => s.id === btn.dataset.id);
+    if (!sector) return;
+    const slots = sector.numbers.map(n => WHEEL.indexOf(n));
+
+    if (btn.classList.contains("slc-study")) {
+      renderSectorStudy(sector);
+    } else if (btn.classList.contains("slc-bank")) {
+      startWheelPlacementGame(slots, { showSectorColors: true, sectorId: sector.id });
+    } else if (btn.classList.contains("slc-blind")) {
+      startWheelPlacementGame(slots, { blind: true, showSectorColors: false, sectorId: sector.id });
+    }
+  });
+
+  // Full wheel buttons
+  document.querySelector("#missingEasy3").onclick = () => startWheelPlacementGame(randomMissingSlots(3), {});
+  document.querySelector("#missingEasy").onclick   = () => startWheelPlacementGame(randomMissingSlots(5), {});
+  document.querySelector("#missingMedium").onclick = () => startWheelPlacementGame(randomMissingSlots(10), {});
+  document.querySelector("#missingHard").onclick   = () => startWheelPlacementGame(randomMissingSlots(18), {});
+
+  const weakBtn = document.querySelector("#missingWeak");
+  if (weakBtn) weakBtn.onclick = () => startWheelPlacementGame(weakSlotIndices, {});
+
   document.querySelector("#startNeighbour").onclick = startNeighbourDrill;
   document.querySelector("#startSpeed").onclick = startSpeedMode;
   document.querySelector("#wheelPractice").onclick = () => {
@@ -836,26 +986,41 @@ function renderWheelTrainer() {
       questions: makeQuestions(["wheel", "neighbours"], 20)
     });
   };
+}
 
-  // Sector highlight buttons
-  const btnWrap = document.querySelector("#sectorHighlightButtons");
-  SECTORS.forEach(sector => {
-    const btn = document.createElement("button");
-    btn.className = "ghost";
-    btn.textContent = sector.shortName;
-    btn.style.borderColor = sector.color;
-    btn.onclick = () => highlightSector(sector);
-    btnWrap.appendChild(btn);
-  });
+function renderSectorStudy(sector) {
+  const content = document.querySelector("#content");
+  const slots = sector.numbers.map(n => WHEEL.indexOf(n));
 
-  const clearBtn = document.createElement("button");
-  clearBtn.className = "ghost";
-  clearBtn.textContent = "Clear";
-  clearBtn.onclick = () => {
-    drawCircularWheel({ missingSlots: [], filled: {}, targetIndex: null });
-    document.querySelector("#sectorInfoBox").innerHTML = "";
-  };
-  btnWrap.appendChild(clearBtn);
+  content.innerHTML = `
+    <div class="mode-label">Sector Study</div>
+    <div class="question" style="color:${sector.color}">${sector.name}</div>
+    <p class="tiny">${sector.description} · ${sector.numbers.length} numbers · ${sector.chips} chips</p>
+
+    <div class="sector-sequence" style="margin:12px 0;">
+      ${sector.numbers.map(n => `<span class="num ${numColor(n)}">${n}</span>`).join("")}
+    </div>
+    <p class="tiny"><strong>Placement:</strong> ${sector.placement}</p>
+
+    <div class="roulette-wheel-wrap" style="margin:16px 0;">
+      <div class="wheel-svg-wrap" id="circleWheel"></div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="studyDrillBank">Drill with bank →</button>
+      <button class="blue"    id="studyDrillBlind">Blind recall →</button>
+      <button class="ghost"   id="studyBack">Back to wheel menu</button>
+    </div>
+  `;
+
+  drawCircularWheel({ missingSlots: [], filled: {}, targetIndex: null, highlightNumbers: sector.numbers });
+
+  const speakBtn = makeSpeakButton("Read sequence", () => `${sector.name}. ${sector.numbers.join(", ")}.`);
+  content.querySelector(".actions").insertBefore(speakBtn, content.querySelector(".actions").firstChild);
+
+  document.querySelector("#studyDrillBank").onclick  = () => startWheelPlacementGame(slots, { showSectorColors: true, sectorId: sector.id });
+  document.querySelector("#studyDrillBlind").onclick = () => startWheelPlacementGame(slots, { blind: true, showSectorColors: false, sectorId: sector.id });
+  document.querySelector("#studyBack").onclick = renderWheelTrainer;
 }
 
 function randomMissingSlots(count) {
@@ -934,14 +1099,14 @@ function placeSelectedNumber(slotIndex) {
   if (wheelGame.selected === correctNumber) {
     wheelGame.filled[slotIndex] = wheelGame.selected;
     wheelGame.correct++;
-    wheelGame.feedback = `Correct — ${correctNumber} belongs there.`;
+    wheelGame.feedback = `✓ Correct! ${wheelSlotContext(slotIndex)}`;
     state.xp += 2;
     state.dailyXp += 2;
     studyStreakTick();
     state.weakSlots[slotIndex] = Math.max(0, (state.weakSlots[slotIndex] || 0) - 1);
   } else {
     wheelGame.wrong++;
-    wheelGame.feedback = `Not there — ${wheelGame.selected} does not go in that pocket. Try again.`;
+    wheelGame.feedback = `✗ No — ${wheelGame.selected} doesn't go there. ${wheelSlotContext(slotIndex)}`;
     state.weakSlots[slotIndex] = (state.weakSlots[slotIndex] || 0) + 3;
     state.weakTopics.wheel = (state.weakTopics.wheel || 0) + 2;
     state.hearts = Math.max(0, state.hearts - 1);
@@ -952,4 +1117,14 @@ function placeSelectedNumber(slotIndex) {
   saveState();
   updateStats();
   renderWheelPlacementGame();
+}
+
+function wheelSlotContext(slotIndex) {
+  const n = WHEEL[slotIndex];
+  const sector = SECTORS.find(s => s.numbers.includes(n));
+  const wi = slotIndex;
+  const left = WHEEL[(wi - 1 + WHEEL.length) % WHEEL.length];
+  const right = WHEEL[(wi + 1) % WHEEL.length];
+  const sectorStr = sector ? ` · Sector: ${sector.shortName}` : "";
+  return `Neighbours: ${left} — ${n} — ${right}${sectorStr}`;
 }

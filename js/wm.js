@@ -256,7 +256,16 @@
     APPS = built.apps;
     buildDesktop(built.desktop);
     buildStartMenu(built.menuLeft, built.menuRight);
-    openApp("about");
+    const requested = new URLSearchParams(location.search).get("open");
+    openApp(requested && APPS[requested] ? requested : "about");
+  }
+
+  /* Install Marco: the whole desktop works offline (like the roulette
+     trainer it hosts). Registered after boot so it never delays first paint. */
+  if ("serviceWorker" in navigator) {
+    addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").then((reg) => reg.update()).catch(() => {});
+    });
   }
 
   fetch("/content/content.json")

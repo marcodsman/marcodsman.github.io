@@ -83,7 +83,7 @@ body {
 }
 
 .home-inner {
-  background-image: url(https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/image.jpg);
+  background-image: url(/img/image.jpg);
 }
 
 .caption  {
@@ -425,4 +425,26 @@ margin-right: 0px!important;
   -webkit-transform: translateZ(0);
           transform: translateZ(0);
   will-change: transform;
+}
+
+/* === Additions for the /classic/ migration (JSON-rendered sections) === */
+.archived-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  font-size: 0.55em;
+  vertical-align: middle;
+  color: #ccc;
+  border: 1px solid #888;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+}
+.extra-projects h3 { font-size: 1.3rem; }
+.more-less { cursor: pointer; }
+.tile-desc {
+  padding: 16px;
+  background: #06120d;
+  color: #20c875;
+  border-radius: 8px;
+  font-family: monospace;
 }

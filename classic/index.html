@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marco Da Silva — Portfolio (Classic)</title>
+  <meta name="description" content="Marco Da Silva's original 2018 portfolio, preserved. The current site lives at marcodasilva.co.za.">
+  <link rel="canonical" href="https://marcodasilva.co.za/classic/">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+
+<body data-spy="scroll" data-target="#navbarResponsive">
+
+  <!-- ============================================-->
+                  <!-- Navbar -->
+  <!-- ============================================-->
+  <div class="navbar-wrapper">
+  <nav id="navbar" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#"><span class="turq">Marco</span> Da Silva</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#welcome-section">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#skills">Skills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#projects">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#certifications">Certifications</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">New Site</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  </div><!-- End Navbar -->
+
+
+  <!-- ============================================-->
+            <!-- Start Landing Section -->
+  <!-- ============================================-->
+
+  <div class="landing" id="welcome-section">
+    <div class="home-wrap">
+      <div class="home-inner"></div>
+    </div>
+  </div>
+
+  <div class="caption text-center">
+    <h1 id="hero-title">Hi. I'm Marco.</h1>
+    <h3 id="hero-subtitle">I create websites and web apps.</h3>
+    <a class="btn btn-outline-light btn-lg" href="#contact">Contact Me</a>
+  </div>
+  <!-- End Landing Section -->
+
+
+  <!-- ============================================-->
+             <!-- Start Skills Section -->
+  <!-- ============================================-->
+
+  <div id="skills" class="offset">
+    <div class="col-12 narrow text-center">
+      <h1>Skills</h1>
+      <p class="lead" id="skills-lead"></p>
+      <a class="btn btn-secondary btn-md" href="#contact">Contact Me</a>
+    </div>
+  </div><!-- End Skills Section -->
+
+
+  <!-- ============================================-->
+            <!-- Start Projects Section -->
+  <!-- ============================================-->
+
+  <div id="projects" class="offset">
+    <div class="less-narrow">
+      <div class="col-12">
+        <h2>Projects</h2>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div id="featured-projects"><!-- rendered from /content/content.json --></div>
+
+      <div class="row">
+        <div class="col-md-12 more-less">
+          <h3 class="turq more-less-text">More</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="row extra-projects" id="extra-projects"><!-- rendered from /content/content.json --></div>
+    </div><!-- End Less Narrow -->
+  </div><!-- End Projects Section -->
+
+
+  <!-- ============================================-->
+        <!-- Start Certifications Section -->
+  <!-- ============================================-->
+
+  <div id="certifications" class="offset">
+    <div class="narrow">
+      <div class="col-12">
+        <h2>Certifications</h2>
+      </div>
+      <div id="cert-rows"><!-- rendered from /content/content.json --></div>
+    </div><!-- End Narrow Class -->
+  </div><!-- End Certifications Section -->
+
+  <!-- ============================================-->
+  <!-- ==========Start Contact Section============ -->
+  <!-- ============================================-->
+
+  <div id="contact" class="offset">
+    <footer>
+      <div class="row justify-content-center">
+        <div class="col-md-7 text-center">
+          <a class="brand" href="#"><span class="turq">Marco</span> Da Silva</a>
+          <br>
+          <strong>
+            <a id="email-head" class="email" href="#"></a>
+          </strong>
+          <p><a id="email-link" class="email" href="#"></a></p>
+          <span id="social-links"><!-- rendered from /content/content.json --></span>
+          <noscript>
+            <p><a class="email" href="mailto:marco@marcodasilva.co.za">marco@marcodasilva.co.za</a> &middot;
+               <a class="email" href="https://github.com/marcodsman">github.com/marcodsman</a></p>
+          </noscript>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!-- End Contact Section -->
+
+<script
+  src="https://code.jquery.com/jquery-3.4.0.slim.min.js"
+  integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI="
+  crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/js/all.min.js"></script>
+<script src="js/classic-render.js"></script>
+</body>
+
+</html>

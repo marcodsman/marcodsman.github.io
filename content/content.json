@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "siteTitle": "Marco Da Silva — Full-stack JavaScript Developer",
+    "description": "Full-stack JavaScript developer in South Africa. React, Node, MongoDB, D3 and offline-first PWAs.",
+    "url": "https://marcodasilva.co.za",
+    "updated": "2026-07-09"
+  },
+  "hero": {
+    "title": "Hi. I'm Marco.",
+    "subtitle": "I create websites and web apps."
+  },
+  "about": {
+    "short": "Full-stack JavaScript developer in South Africa. I build web apps that keep working when the network doesn't — React and Node on top, service workers underneath.",
+    "notepad": "Hi. I'm Marco.\n\nFull-stack JavaScript developer in South Africa.\nI build web apps that keep working when the\nnetwork doesn't.\n\nStack: React, Node, Express, MongoDB, D3.\nCurrent obsession: PWAs that work with the wifi off.\n\nLatest ship: the French Roulette Trainer — an\ninstallable PWA that drills the 37-number wheel,\nsectors, payouts and call bets. Fully offline.\n\n---\nThis file is editable. Go ahead, nothing is saved.\n(That's the point.)"
+  },
+  "skills": {
+    "summary": "I'm a JavaScript developer. I create full stack web apps using technologies such as HTML 5, CSS 3, React.js, MongoDB, Node.js, Express.js, Bootstrap 4, D3.js, Mocha and Chai. I also write in my spare time.",
+    "writingUrl": "https://healthtraveljunkie.com/dragonfruit-plant-superfruit-backyard-garden/",
+    "list": ["HTML 5", "CSS 3", "JavaScript", "React.js", "Node.js", "Express.js", "MongoDB", "Bootstrap 4", "D3.js", "Mocha", "Chai", "Service Workers / PWA"]
+  },
+  "projects": [
+    {
+      "id": "roulette-trainer",
+      "name": "French Roulette Trainer",
+      "type": "featured",
+      "url": "/roulette-trainer/",
+      "embed": true,
+      "status": "live",
+      "description": "Drill the 37-number wheel sequence, sectors, payouts, French call bets and dealer procedures. Installable PWA — works offline.",
+      "tech": ["Vanilla JS", "PWA", "Canvas"],
+      "icon": "wheel",
+      "image": null
+    },
+    {
+      "id": "message-board",
+      "name": "Anonymous Message Board",
+      "type": "featured",
+      "url": "https://anonymous-image-board.glitch.me",
+      "embed": false,
+      "status": "archived",
+      "description": "Full-stack anonymous image board with threads, replies and moderation endpoints.",
+      "tech": ["Node.js", "Express.js", "MongoDB"],
+      "icon": "ie",
+      "image": "/img/Anonymous Message Board.png"
+    },
+    {
+      "id": "drum-machine",
+      "name": "React Drum Machine",
+      "type": "featured",
+      "url": "https://codepen.io/marcods/pen/JzPerj",
+      "embed": false,
+      "status": "live",
+      "description": "Playable drum machine with keyboard bindings and sample banks.",
+      "tech": ["React.js"],
+      "icon": "app",
+      "image": "/img/drum machine dark and orange.png"
+    },
+    {
+      "id": "pomodoro",
+      "name": "React Pomodoro App",
+      "type": "featured",
+      "url": "https://codepen.io/marcods/pen/byVYaZ",
+      "embed": false,
+      "status": "live",
+      "description": "Configurable pomodoro session and break timer.",
+      "tech": ["React.js"],
+      "icon": "app",
+      "image": "/img/pomodoro app transparent.png"
+    },
+    {
+      "id": "calculator",
+      "name": "React Calculator",
+      "type": "featured",
+      "url": "https://codepen.io/marcods/pen/ZPOYLK",
+      "embed": false,
+      "status": "live",
+      "description": "Formula-logic calculator built as a freeCodeCamp front-end project.",
+      "tech": ["React.js"],
+      "icon": "app",
+      "image": "/img/React-Calculator-transparent.png"
+    },
+    { "id": "tree-map", "name": "Tree Map (D3.js)", "type": "extra", "url": "https://codepen.io/marcods/pen/zXEbdj", "embed": false, "status": "live", "tech": ["D3.js"], "icon": "app" },
+    { "id": "bar-graph", "name": "Bar Graph (D3.js)", "type": "extra", "url": "https://codepen.io/marcods/pen/GejRjM", "embed": false, "status": "live", "tech": ["D3.js"], "icon": "app" },
+    { "id": "stock-price", "name": "Stock Price Checker (back-end)", "type": "extra", "url": "https://stock-price-marco3.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js"], "icon": "ie" },
+    { "id": "metric-converter", "name": "Metric Imperial Converter", "type": "extra", "url": "https://metric-imperial-converter-marco.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js"], "icon": "ie" },
+    { "id": "url-shortener", "name": "URL Shortener Microservice", "type": "extra", "url": "https://url-shortener-free.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js"], "icon": "ie" },
+    { "id": "quote-machine", "name": "Random Quote Machine (jQuery)", "type": "extra", "url": "https://codepen.io/marcods/pen/LqwyvY", "embed": false, "status": "live", "tech": ["jQuery"], "icon": "app" },
+    { "id": "weather-app", "name": "Weather App", "type": "extra", "url": "https://codepen.io/marcods/pen/GRKzwKg", "embed": false, "status": "live", "tech": ["JavaScript"], "icon": "app" },
+    { "id": "heat-map", "name": "Heat Map (D3.js)", "type": "extra", "url": "https://codepen.io/marcods/pen/XGojOV", "embed": false, "status": "live", "tech": ["D3.js"], "icon": "app" },
+    { "id": "personal-library", "name": "Personal Library (back-end)", "type": "extra", "url": "https://personal-library-marco.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js", "MongoDB"], "icon": "ie" },
+    { "id": "file-metadata", "name": "File Metadata Microservice", "type": "extra", "url": "https://file-metadata-microservice-marco.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js"], "icon": "ie" },
+    { "id": "header-parser", "name": "Request Header Parser Microservice", "type": "extra", "url": "https://who-am-i-api-freecodecamp.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js"], "icon": "ie" },
+    { "id": "markdown-previewer", "name": "Markdown Previewer (React.js)", "type": "extra", "url": "https://codepen.io/marcods/pen/wNVLLY", "embed": false, "status": "live", "tech": ["React.js"], "icon": "app" },
+    { "id": "choropleth", "name": "Choropleth Map (D3.js)", "type": "extra", "url": "https://codepen.io/marcods/pen/vPqXVg", "embed": false, "status": "live", "tech": ["D3.js"], "icon": "app" },
+    { "id": "scatterplot", "name": "Scatterplot Graph (D3.js)", "type": "extra", "url": "https://codepen.io/marcods/pen/pYKZjN", "embed": false, "status": "live", "tech": ["D3.js"], "icon": "app" },
+    { "id": "issue-tracker", "name": "Issue Tracker (back-end)", "type": "extra", "url": "https://issue-tracker-marco.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js", "MongoDB"], "icon": "ie" },
+    { "id": "exercise-tracker", "name": "Exercise Tracker (back-end)", "type": "extra", "url": "https://exercise-tracker-marco.glitch.me", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js", "MongoDB"], "icon": "ie" },
+    { "id": "timestamp", "name": "Timestamp Microservice", "type": "extra", "url": "https://timestamp-microservice-freecc.glitch.me/", "embed": false, "status": "archived", "tech": ["Node.js", "Express.js"], "icon": "ie" },
+    { "id": "fcc-portfolio", "name": "My Personal Portfolio (2018)", "type": "extra", "url": "/classic/", "embed": true, "status": "live", "tech": ["Bootstrap 4"], "icon": "ie" }
+  ],
+  "certifications": [
+    { "id": "full-stack", "name": "Full Stack Developer Certification", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/full-stack", "image": "/img/FULL STACK Certificate.png", "wide": true },
+    { "id": "responsive-web-design", "name": "Responsive Web Design Certificate", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/responsive-web-design", "image": "/img/Responsive Web Design Certificate.png", "wide": false },
+    { "id": "js-algorithms", "name": "JavaScript Algorithms and Data Structures", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/javascript-algorithms-and-data-structures", "image": "/img/Javascript Algorithms and Data Structures.png", "wide": false },
+    { "id": "data-visualization", "name": "Data Visualization Certificate", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/data-visualization", "image": "/img/Data Visualization.png", "wide": false },
+    { "id": "front-end-libraries", "name": "Front End Libraries Certificate", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/front-end-libraries", "image": "/img/front-end-libraries.png", "wide": false },
+    { "id": "apis-microservices", "name": "APIs and Microservices", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/apis-and-microservices", "image": "/img/APIs and Microservices certificate.png", "wide": false },
+    { "id": "infosec-qa", "name": "Information Security and QA", "issuer": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/information-security-and-quality-assurance", "image": "/img/information security and quality assurance.png", "wide": false }
+  ],
+  "cv": {
+    "name": "Marco Da Silva",
+    "tagline": "Full-stack JavaScript developer · South Africa",
+    "sections": [
+      { "title": "What I do", "body": "Web apps that keep working when the network doesn't. React and Node on top, service workers underneath." },
+      { "title": "Selected work", "projectIds": ["roulette-trainer", "message-board", "drum-machine"] },
+      { "title": "Stack", "body": "JavaScript, React, Node, Express, MongoDB, D3, service workers / PWA." },
+      { "title": "Certifications", "certIds": ["full-stack"] }
+    ]
+  },
+  "contact": {
+    "email": "marco@marcodasilva.co.za",
+    "availability": "Not currently available for freelance work.",
+    "socials": [
+      { "id": "github", "label": "GitHub", "url": "https://github.com/marcodsman", "icon": "github" },
+      { "id": "freecodecamp", "label": "freeCodeCamp", "url": "https://www.freecodecamp.org/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695", "icon": "fcc" },
+      { "id": "codewars", "label": "Codewars", "url": "https://www.codewars.com/users/marcodsman", "icon": "/img/codewars2.svg" },
+      { "id": "glitch", "label": "Glitch", "url": "https://glitch.com/@marcodsman", "icon": "/img/glitch-icon-white-transparent.png", "iconHover": "/img/glitch-icon-hover.png" }
+    ]
+  }
+}

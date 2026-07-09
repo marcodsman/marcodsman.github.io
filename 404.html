@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — A problem has been detected</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    html,body{height:100%;margin:0}
+    body{
+      background:#0827a0;color:#e8e8e8;
+      font-family:"Lucida Console",Consolas,monospace;
+      font-size:14px;line-height:1.7;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .bsod{max-width:640px;padding:24px}
+    .head{background:#a8a8a8;color:#0827a0;display:inline-block;padding:0 8px;font-weight:bold;margin-bottom:18px}
+    a{color:#fff}
+    .blink{animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    @media (prefers-reduced-motion: reduce){.blink{animation:none}}
+  </style>
+</head>
+<body>
+  <div class="bsod">
+    <span class="head">MARCO_XP</span>
+    <p>A problem has been detected and this page has been shut down to prevent damage to your browsing session.</p>
+    <p>PAGE_NOT_FOUND_EXCEPTION</p>
+    <p>Technical information:<br>
+    *** STOP: 0x00000404 (0xC0FFEE, 0xDEADBEEF)</p>
+    <p>If this is the first time you've seen this error screen, check the address for typos. If the problem persists:</p>
+    <p>* Return to <a href="/">the desktop</a><br>
+       * Try the <a href="/classic/">classic portfolio</a><br>
+       * Or email <a href="mailto:marco@marcodasilva.co.za">marco@marcodasilva.co.za</a></p>
+    <p>Press any key to continue <span class="blink">_</span></p>
+  </div>
+  <script>
+    addEventListener("keydown", () => location.href = "/");
+  </script>
+</body>
+</html>

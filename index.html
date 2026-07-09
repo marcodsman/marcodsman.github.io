@@ -1,318 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
-  <title>My Personal Portfolio Page - FCC</title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marco Da Silva — Full-stack JavaScript Developer</title>
+  <meta name="description" content="Full-stack JavaScript developer in South Africa. React, Node, MongoDB, D3 and offline-first PWAs. Portfolio, projects and contact — served as a Windows XP desktop.">
+  <link rel="canonical" href="https://marcodasilva.co.za/">
+  <meta property="og:title" content="Marco Da Silva — Full-stack JavaScript Developer">
+  <meta property="og:description" content="A portfolio you can drag windows around in. React, Node, D3 and offline-first PWAs.">
+  <meta property="og:url" content="https://marcodasilva.co.za/">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/xp.css">
 </head>
 
+<body>
 
-<body data-spy="scroll" data-target="#navbarResponsive">
-  
-  <!-- ============================================-->
-                  <!-- Navbar -->
-  <!-- ============================================-->
-  <div class="navbar-wrapper">
-  <nav id="navbar" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#"><span class="turq">Marco</span> Da Silva</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#welcome-section">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#skills">Skills</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#projects">Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#certifications">Certifications</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact</a>
-        </li>
-      </ul>
-    </div
-  </nav>
-  </div><!-- End Navbar -->
-    
-    
-  <!-- ============================================-->
-            <!-- Start Landing Section -->
-  <!-- ============================================-->
-    
-  <div class="landing" id="welcome-section">
-    <div class="home-wrap">
-      <div class="home-inner">
-        <h1>text</h1>
+  <!-- Semantic fallback: search engines, screen readers, and no-JS visitors.
+       Keep this small and hand-maintained; the desktop renders from /content/content.json. -->
+  <section class="visually-hidden">
+    <h1>Marco Da Silva — Full-stack JavaScript Developer</h1>
+    <p>I build web apps that keep working when the network doesn't. React and Node on top,
+       service workers underneath. Based in South Africa.</p>
+    <ul>
+      <li><a href="/roulette-trainer/">French Roulette Trainer — offline-first PWA</a></li>
+      <li><a href="/classic/">Classic portfolio (2018) with all projects and certifications</a></li>
+      <li><a href="https://github.com/marcodsman">GitHub: marcodsman</a></li>
+      <li><a href="mailto:marco@marcodasilva.co.za">marco@marcodasilva.co.za</a></li>
+    </ul>
+  </section>
+  <noscript>
+    <p style="font-family:sans-serif;padding:1rem">
+      This portfolio is an interactive Windows XP desktop and needs JavaScript.
+      Without it, try the <a href="/classic/">classic version</a> or email
+      <a href="mailto:marco@marcodasilva.co.za">marco@marcodasilva.co.za</a>.
+    </p>
+  </noscript>
+
+  <div id="screen" aria-label="Windows XP style desktop">
+    <div id="desktop">
+      <div id="icons"></div>
+    </div>
+
+    <div id="start-menu" role="menu">
+      <div class="sm-head"><div class="avatar">M</div><div>Marco Da Silva</div></div>
+      <div class="sm-cols">
+        <div class="sm-left" id="sm-left"></div>
+        <div class="sm-right" id="sm-right"></div>
+      </div>
+      <div class="sm-foot">
+        <button id="turn-off">
+          <span class="off"><svg viewBox="0 0 12 12"><path d="M6 1v4" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M3 3a4.2 4.2 0 1 0 6 0" stroke="#fff" stroke-width="1.6" fill="none"/></svg></span>
+          Turn Off Computer
+        </button>
+      </div>
+    </div>
+
+    <div id="taskbar">
+      <button id="start-btn">
+        <svg class="flag" viewBox="0 0 22 18" aria-hidden="true">
+          <path d="M1 4 C4 1,7 2,10 4 L10 9 C7 7,4 6,1 9 Z" fill="#f65314"/>
+          <path d="M12 5 C15 3,18 3,21 5 L21 10 C18 8,15 8,12 10 Z" fill="#7cbb00"/>
+          <path d="M1 11 C4 8,7 9,10 11 L10 16 C7 14,4 13,1 16 Z" fill="#00a1f1"/>
+          <path d="M12 12 C15 10,18 10,21 12 L21 17 C18 15,15 15,12 17 Z" fill="#ffbb00"/>
+        </svg>
+        start
+      </button>
+      <div id="task-buttons"></div>
+      <div id="tray"><span id="clock">--:--</span></div>
+    </div>
+
+    <div id="shutdown">
+      <div>
+        <h1>It is now safe to hire Marco.</h1>
+        <p>marco@marcodasilva.co.za</p>
+        <button id="restart">Restart</button>
       </div>
     </div>
   </div>
-  
-  <div class="caption text-center">
-    <h1>Hi. I'm Marco.</h1>
-    <h3>I create websites and web apps.</h3>
-    <a class="btn btn-outline-light btn-lg" href="#contact">Contact Me</a>
-  </div >
-  <!-- End Landing Section -->
-    
-    
-  <!-- ============================================-->
-             <!-- Start Skills Section -->
-  <!-- ============================================-->
-    
-  <div id="skills" class="offset">
-    <div class="col-12 narrow text-center">
-      <h1>Skills</h1>
-      <p class="lead">I'm a Javascript developer. I create full stack web apps using technologies such as HTML 5, CSS 3, React.js, MongoDB, Node.js, Express.js, Bootstrap 4, D3.js, Mocha, Chai etc. I also <a target="_blank" href="https://healthtraveljunkie.com/dragonfruit-plant-superfruit-backyard-garden/">write</a> in my spare time.</p>
-      <a class="btn btn-secondary btn-md" href="#contact">Contact Me</a>
-    </div>
-  </div><!-- End Skills Section -->
-    
 
-  <!-- ============================================-->
-            <!-- Start Projects Section -->
-  <!-- ============================================-->
-    
-  <div id="projects" class="offset">
-    <div class="less-narrow">
-      <div class="col-12">
-        <h2>Projects</h2>
-        <div class="heading-underline"></div>
-      </div>
-      
-      <div class="row"><!--Row one -->
-
-        <div class="col-md-6">
-          <div class="project-tile" id="">
-            <a href="/roulette-trainer/">
-              <h3>French Roulette Trainer</h3>
-            </a>
-            <a href="/roulette-trainer/">
-              <p style="padding:16px;background:#06120d;color:#20c875;border-radius:8px;font-family:monospace;">
-                Drill the 37-number wheel sequence, sectors, payouts, French call bets and dealer procedures. Installable PWA — works offline.
-              </p>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="project-tile" id="">
-            <a target="_blank" href="https://anonymous-image-board.glitch.me">
-              <h3>Anonymous Message Board</h3>
-            </a>
-            <a target="_blank" href="https://anonymous-image-board.glitch.me">
-              <img id="tile4" src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/Anonymous%20Message%20Board.png" />
-            </a>
-          </div>
-        </div>
-
-      </div><!-- End Row One -->
-      
-      <div class="row"><!--Row two -->
-        
-        <div class="col-md-4">
-          <div class="project-tile" id="tile2">
-            <a target="_blank" href="https://codepen.io/marcods/pen/JzPerj">
-              <h3>React Drum Machine</h3>
-            </a>
-            <a target="_blank" href="https://codepen.io/marcods/pen/JzPerj">
-              <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/drum%20machine%20dark%20and%20orange.png" />
-            </a>
-          </div>
-        </div><!-- End Col 1 -->
-        
-        <div class="col-md-4">
-          <div class="project-tile" id="tile1">
-            <a target ="_blank" href="https://codepen.io/marcods/pen/byVYaZ">
-              <h3>React Pomodoro App</h3>
-            </a>
-            <a href="https://codepen.io/marcods/pen/byVYaZ" target="_blank">
-              <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/pomodoro%20app%20transparent.png" />
-            </a>
-          </div>
-        </div><!-- End Col 2 -->
-        
-        
-        <div class="col-md-4">
-          <div class="project-tile" id="tile3">
-            <a target="_blank" href="https://codepen.io/marcods/pen/ZPOYLK">
-              <h3>React Calculator</h3>
-            </a>
-            <a target="_blank" href="https://codepen.io/marcods/pen/ZPOYLK">
-              <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/React-Calculator-transparent.png" />
-            </a>
-          </div>
-        </div><!-- End col 3 -->
-       
-      </div><!-- End Row 2 --->
-      
-      <div class="row"> <!-- Row 3 -->
-        <div class="col-md-12 more-less">
-          <h3 class="turq more-less-text">More</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </div>
-      <div class="row extra-projects"> <!-- Row 4 (Hidden by default) -->
-        <div class="col-md-4">
-          <a target="_blank" href="https://codepen.io/marcods/pen/zXEbdj"><h3>Tree Map (D3.js)</h3></a><br />
-          <a target="_blank" href="https://codepen.io/marcods/pen/GejRjM"><h3>Bar Graph (D3.js)</h3></a><br />
-          <a target="_blank" href="https://stock-price-marco3.glitch.me"><h3>Stock Price Checker (back-end)</h3></a><br />
-          <a target="_blank" href="https://metric-imperial-converter-marco.glitch.me"><h3>Metric Imperial Converter</h3></a><br />
-          <a target="_blank" href="https://url-shortener-free.glitch.me"><h3>URL Shortener Microservice</h3><br />
-          <a target="_blank" href="https://codepen.io/marcods/pen/LqwyvY"><h3>Random Quote Machine (jQuery)</h3>
-        </div>
-        <div class="col-md-4">
-          <a target="_blank" href="https://codepen.io/marcods/pen/GRKzwKg"><h3>Weather App</h3></a><br />
-          <a target="_blank" href="https://codepen.io/marcods/pen/XGojOV"><h3>Heat Map (D3.js)</h3></a><br />
-          <a target="_blank" href="https://personal-library-marco.glitch.me"><h3>Personal Library (back-end)</h3></a><br />
-          <a target="_blank" href="https://file-metadata-microservice-marco.glitch.me"><h3>File Metadata Microservice</h3></a><br />
-          <a target="_blank" href="https://who-am-i-api-freecodecamp.glitch.me"><h3>Request Header Parser Microservice</h3><br />
-          <a target="_blank" href="https://codepen.io/marcods/pen/wNVLLY"><h3>Markdown Previewer (React.js)</h3>
-        </div>
-        <div class="col-md-4">
-          <a target="_blank" href="https://codepen.io/marcods/pen/vPqXVg"><h3>Choropleth Map (D3.js)</h3></a><br />
-          <a target="_blank" href="https://codepen.io/marcods/pen/pYKZjN"><h3>Scatterplot Graph (D3.js)</h3></a><br />
-          <a target="_blank" href="https://issue-tracker-marco.glitch.me"><h3>Issue Tracker (back-end)</h3></a><br />
-          <a target="_blank" href="https://exercise-tracker-marco.glitch.me"><h3>Exercise Tracker (back-end)</h3></a><br />
-          <a target="_blank" href="https://timestamp-microservice-freecc.glitch.me/"><h3>Timestamp Microservice</h3><br />
-          <a target="_blank" href="https://codepen.io/marcods/pen/WWymQd"><h3>My Personal Portfolio </h3>
-        </div>
-      </div>
-    </div><!-- End Less Narrow --->
-  </div><!-- End Projects Section -->
-    
-    
-  <!-- ============================================-->
-        <!-- Start Certifications Section -->
-  <!-- ============================================-->
-    
-  <div id="certifications" class="offset">
-    <div class="narrow">
-      <div class="col-12">
-        <h2>Certifications</h2>
-      </div>
-      
-      <div class="row"><!-- Start Row One -->
-        <div class="col-md-12 align-bottom">
-          <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/full-stack">
-            <h3>Full Stack Developer Certification</h3>
-          </a>
-          <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/full-stack">
-            <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/FULL%20STACK%20Certificate.png" />
-          </a>
-        </div>
-      </div>
-      
-      <div class="row"><!-- Start Row Two -->
-        
-        <div class="col-md-4 align-bottom">
-          <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/responsive-web-design">
-            <h3>Responsive Web Design Certificate</h3>
-          </a>
-          <a href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/responsive-web-design" target="_blank">
-            <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/Responsive%20Web%20Design%20Certificate.png" />
-          </a>
-      </div>
-      
-      <div class="col-md-4 align-bottom">
-        <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/javascript-algorithms-and-data-structures">
-          <h3>JavaScript Algorithms and Data Structures</h3>
-        </a>
-        <a href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/javascript-algorithms-and-data-structures" target="_blank">
-          <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/Javascript%20Algorithms%20and%20Data%20Structures.png" />
-        </a>
-      </div>
-      
-      <div class="col-md-4 align-bottom">
-        <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/data-visualization">
-          <h3>Data Visualization Certificate</h3>
-        </a>
-        <a href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/data-visualization" target="_blank">
-          <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/Data%20Visualization.png" />
-        </a>
-      </div>
-        
-        
-      </div><!-- End of row Two -->
-      
-      <div class="row"><!-- Start Row Three -->
-        
-        <div class="col-md-4 align-bottom">
-          <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/front-end-libraries">
-            <h3>Front End Libraries Certificate</h3>
-          </a>
-          <a href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/front-end-libraries">
-            <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/front-end-libraries.png" />
-          </a>
-        </div>
-        
-        <div class="col-md-4 align-bottom">
-          <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/apis-and-microservices">
-            <h3>APIs and Microservices</h3>
-          </a>
-          <a href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/apis-and-microservices" target="_blank">
-            <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/APIs%20and%20Microservices%20certificate.png" />
-          </a>
-        </div>
-        
-        <div class="col-md-4 align-bottom">
-          <a target="_blank" href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/information-security-and-quality-assurance">
-            <h3>Information Security and QA</h3>
-          </a>
-          <a href="https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/information-security-and-quality-assurance" target="_blank">
-            <img src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/information%20security%20and%20quality%20assurance.png" />
-          </a>
-        </div>
-        
-      </div><!-- End Row Three -->
-    </div><!-- End Narrow Class -->
-  </div><!-- End Certifications Section -->
-  
-  <!-- ============================================-->
-  <!-- *****=======Start Contact Section*****===== -->
-  <!-- ============================================-->
-    
-  <div id="contact" class="offset">
-    <footer>
-      <div class="row justify-content-center">
-        <div class="col-md-7 text-center">
-          <a class="brand" href="#"><span class="turq">Marco</span> Da Silva</a>
-          <br>
-          <strong>
-            <a id="email-head" class="email" href="mailto:marco@marcodasilva.co.za">Not currently available for freelance work.</a>
-          </strong>
-          <p><a class="email" href="mailto:marco@marcodasilva.co.za">marco@marcodasilva.co.za</a></p>
-          
-          <a id="profile-link" href="https://github.com/marcodsman" target="_blank"><i class="fab fa-github-square fa-3x"></i></a>
-          <a id="profile-link2" href="https://www.freecodecamp.org/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695" target="_blank"><i class="fab fa-free-code-camp fa-3x"></i></a>
-          <a href="https://www.codewars.com/users/marcodsman" target="_blank"><span class="iconify" data-icon="simple-icons:codewars" data-inline="true" data-height="40"></span></a>
-          <a href="https://glitch.com/@marcodsman" target="_blank"><img class="icon" width="48" src="https://raw.githubusercontent.com/marcodsman/marcodsman.github.io/master/img/glitch-icon-white-transparent.png" /></a>
-        </div>
-      </div>
-    </footer>
-  </div>
-  <!-- End Contact Section -->
-
-<script
-			  src="https://code.jquery.com/jquery-3.4.0.slim.min.js"
-			  integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI="
-			  crossorigin="anonymous">
-</script>
-<script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
-</script>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/js/all.min.js">
-</script>
-<script src="//code.tidio.co/gt2e6op8m79e3bngijzyr8r81vfojlic.js"></script><!-- Tidio chatbot -->
+  <script defer src="/js/icons.js"></script>
+  <script defer src="/js/apps.js"></script>
+  <script defer src="/js/wm.js"></script>
 </body>
 
 </html>

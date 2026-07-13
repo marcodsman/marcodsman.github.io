@@ -149,6 +149,8 @@ function buildApps(content) {
     init: (el, wm) => initCmd(el, wm, content),
   };
 
+  apps.minesweeper = buildMinesweeperApp();
+
   apps.recycle = {
     title: "Recycle Bin", icon: "recycle", label: "Recycle Bin",
     menu: "Recycle Bin", w: 420, h: 260, x: 300, y: 150,
@@ -170,10 +172,11 @@ function buildApps(content) {
 
   return {
     apps,
-    desktop: ["about", "projects", "roulette", "cmd", "cv", "recycle"],
+    desktop: ["about", "projects", "roulette", "minesweeper", "cmd", "cv", "recycle"],
     menuLeft: ["about", "projects", "cmd", "cv"],
     menuRight: [
       { open: "roulette", label: "Roulette Trainer", icon: "wheel" },
+      { open: "minesweeper", label: "Minesweeper", icon: "mine" },
       { open: "recycle", label: "Recycle Bin", icon: "recycle" },
       { open: "classic", label: "Old Portfolio (2018)", icon: "ie" },
       github ? { href: github.url, label: "GitHub", icon: "github" } : null,

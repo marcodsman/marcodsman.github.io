@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<div id="host"></div>
+<script src="/js/minesweeper.js"></script>
+<script>
+  const R = [];
+  const t = (name, cond) => R.push(`${cond ? "PASS" : "FAIL"} ${name}`);
+  const click = (el) => el.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  const rclick = (el) => el.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true, cancelable: true }));
+  const key = (el, k) => el.dispatchEvent(new KeyboardEvent("keydown", { key: k, bubbles: true, cancelable: true }));
+
+  const host = document.getElementById("host");
+  const app = buildMinesweeperApp();
+  host.innerHTML = app.body();
+  app.init(host);
+
+  const grid = host.querySelector(".ms-grid");
+  const face = host.querySelector(".ms-face");
+  const mines = host.querySelector(".ms-mines");
+  const cells = () => [...grid.children];
+  const openCount = () => cells().filter((c) => c.classList.contains("open")).length;
+
+  t("81 cells", cells().length === 81);
+
+  click(cells()[40]);
+  t("first click opens cells", openCount() >= 1);
+  t("first click never a mine", face.textContent !== "\u{1F635}");
+
+  /* Rare boards flood-win on the first click (auto-flags mines, counter 000).
+     Reset until a game is actually in progress so the flag tests mean something. */
+  let guard = 0;
+  while (face.textContent !== "\u{1F642}" && guard++ < 99) { click(face); click(cells()[40]); }
+
+  const closed = cells().find((c) => !c.classList.contains("open"));
+  rclick(closed);
+  t("flag renders", closed.textContent === "\u{1F6A9}");
+  t("counter decrements", mines.textContent === "009");
+  click(closed);
+  t("flagged cell won't reveal", !closed.classList.contains("open"));
+  rclick(closed);
+  t("unflag restores counter", mines.textContent === "010");
+
+  cells().forEach((c) => click(c));
+  const end = face.textContent;
+  t("game reaches an end state", end === "\u{1F635}" || end === "\u{1F60E}");
+  if (end === "\u{1F635}") t("loss reveals bombs", cells().some((c) => c.textContent === "\u{1F4A3}"));
+
+  const frozen = grid.innerHTML;
+  click(cells()[0]);
+  rclick(cells()[0]);
+  t("board frozen after game over", grid.innerHTML === frozen);
+
+  click(face);
+  t("reset rebuilds board", cells().length === 81 && openCount() === 0 &&
+    mines.textContent === "010" && face.textContent === "\u{1F642}");
+
+  grid.dispatchEvent(new FocusEvent("focus"));
+  key(grid, "f");
+  t("keyboard flag works", cells().some((c) => c.textContent === "\u{1F6A9}") && mines.textContent === "009");
+  key(grid, "Enter");
+  t("Enter respects flag", openCount() === 0);
+  key(grid, "f");
+  key(grid, "ArrowRight");
+  key(grid, "Enter");
+  t("keyboard move + reveal works", openCount() >= 1);
+  const curCount = cells().filter((c) => c.classList.contains("cur")).length;
+  t("exactly one cursor cell", curCount === 1);
+
+  document.title = "MSTEST :: " + R.join(" | ");
+</script>

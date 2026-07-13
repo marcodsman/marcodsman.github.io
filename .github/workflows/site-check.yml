@@ -16,6 +16,7 @@ jobs:
       - name: Syntax-check all scripts
         run: |
           node --check js/icons.js
+          node --check js/minesweeper.js
           node --check js/apps.js
           node --check js/wm.js
           node --check sw.js
@@ -32,6 +33,23 @@ jobs:
           test "$icons" -ge 4 || { echo "::error::only $icons desktop icons rendered"; exit 1; }
           grep -q 'task-btn' dom.html || { echo "::error::no taskbar button"; exit 1; }
           echo "desktop boots with $icons icons"
+
+      - name: Minesweeper renders in the shell
+        run: |
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --virtual-time-budget=5000 --dump-dom "http://localhost:8931/?open=minesweeper" > ms.html 2>/dev/null
+          cells=$(grep -o 'class="ms-cell"' ms.html | wc -l)
+          test "$cells" -eq 81 || { echo "::error::expected 81 cells, got $cells"; exit 1; }
+          echo "minesweeper renders 81 cells"
+
+      - name: Minesweeper plays (DOM functional test)
+        run: |
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --virtual-time-budget=5000 --dump-dom "http://localhost:8931/.github/tests/ms-test.html" > mstest.html 2>/dev/null
+          grep -o '<title>[^<]*' mstest.html || true
+          grep -q 'MSTEST' mstest.html || { echo "::error::minesweeper test page did not run"; exit 1; }
+          grep -q 'FAIL' mstest.html && { echo "::error::minesweeper functional test failed"; exit 1; }
+          echo "all minesweeper assertions pass"
 
       - name: Render the classic site in headless Chrome
         run: |

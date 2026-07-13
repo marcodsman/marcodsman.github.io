@@ -162,6 +162,22 @@ textarea.notepad{
 .status-badge.live{background:#e4f6e4;border:1px solid #7cb87c;color:#1e6b1e}
 .status-badge.archived{background:#f6ecec;border:1px solid #c99;color:#8a3030}
 
+/* ---------- App: Minesweeper ---------- */
+.ms{height:100%;overflow:auto;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px;background:var(--face)}
+.ms-frame{padding:8px;background:var(--face);border:3px solid;border-color:#fff #808080 #808080 #fff}
+.ms-top{display:flex;align-items:center;justify-content:space-between;padding:5px 6px;margin-bottom:8px;border:2px solid;border-color:#808080 #fff #fff #808080}
+.ms-led{font-family:"Lucida Console",Consolas,monospace;font-size:17px;font-weight:bold;color:#f00;background:#000;padding:1px 4px;letter-spacing:2px;border:1px solid;border-color:#808080 #fff #fff #808080}
+.ms-face{width:30px;height:30px;padding:0;font-size:17px;line-height:1;cursor:pointer;display:grid;place-items:center;background:var(--face);border:2px solid;border-color:#fff #808080 #808080 #fff}
+.ms-face:active{border-color:#808080 #fff #fff #808080}
+.ms-grid{display:grid;grid-template-columns:repeat(9,26px);grid-auto-rows:26px;border:3px solid;border-color:#808080 #fff #fff #808080;outline:none}
+.ms-cell{display:grid;place-items:center;font:bold 13px "Lucida Console",Consolas,monospace;background:var(--face);border:2px solid;border-color:#fff #808080 #808080 #fff;cursor:default}
+.ms-cell.open{border:1px solid #b5b2a5;background:#e6e3d7}
+.ms-cell.hit{background:#e33}
+.ms-grid:focus .ms-cell.cur{outline:2px solid var(--sel);outline-offset:-2px}
+.ms-cell.n1{color:#0000f5}.ms-cell.n2{color:#0a7d0a}.ms-cell.n3{color:#e00}.ms-cell.n4{color:#000080}
+.ms-cell.n5{color:#7b0000}.ms-cell.n6{color:#0a7d7d}.ms-cell.n7{color:#000}.ms-cell.n8{color:#808080}
+.ms-help{font-size:10px;color:#666;text-align:center;line-height:1.4}
+
 /* ---------- IE chrome (classic-site window) ---------- */
 .ie-bar{
   display:flex;align-items:center;gap:6px;padding:4px 6px;

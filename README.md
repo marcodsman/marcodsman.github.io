@@ -8,6 +8,7 @@ Live at [marcodasilva.co.za](https://marcodasilva.co.za/) via GitHub Pages.
 | Path | What it is |
 |---|---|
 | `/` | The XP desktop shell (`index.html`, `css/xp.css`, `js/{icons,apps,wm}.js`) |
+| `/js/minesweeper.js` | Playable Minesweeper (9×9, 10 mines) as a native desktop window — deep-linkable via `/?open=minesweeper` |
 | `/content/content.json` | **The single content source.** Both the desktop and the classic site render from it — edit this one file to update both. |
 | `/classic/` | The original 2018 Bootstrap portfolio, preserved, rendered from the shared content layer |
 | `/roulette-trainer/` | Standalone PWA with **its own service worker** — the root SW deliberately never touches this scope |
@@ -41,8 +42,8 @@ Roughly in order of impact:
       (it still leads with Bootstrap 4 / Mocha / Chai).
 - [ ] **Resolve the mixed message**: the shutdown screen says *"It is now safe to hire Marco"*
       while `contact.availability` says *"Not currently available for freelance work."*
-- [ ] **A playable XP app** (Minesweeper or Solitaire in a window) — the shell is the
-      differentiator; one game would make the site memorable and shareable. ~Weekend build.
+- [x] ~~A playable XP app~~ — Minesweeper shipped (`js/minesweeper.js`). Solitaire would be
+      the next one up, but it's a bigger build (drag-and-drop stacks, 52 hand-rolled cards).
 - [ ] **Prerender content into the hidden semantic section** of `index.html` at deploy time —
       crawlers currently see only the short hand-written fallback, not the project list.
 - [ ] **Analytics** — no visibility on traffic at all. GoatCounter or Plausible

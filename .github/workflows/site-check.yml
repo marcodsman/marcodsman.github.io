@@ -46,9 +46,12 @@ jobs:
         run: |
           google-chrome --headless=new --no-sandbox --disable-gpu \
             --virtual-time-budget=5000 --dump-dom "http://localhost:8931/.github/tests/ms-test.html" > mstest.html 2>/dev/null
-          grep -o '<title>[^<]*' mstest.html || true
-          grep -q 'MSTEST' mstest.html || { echo "::error::minesweeper test page did not run"; exit 1; }
-          grep -q 'FAIL' mstest.html && { echo "::error::minesweeper functional test failed"; exit 1; }
+          # Only judge the <title> — the page body contains the test script
+          # source, which mentions the literal string FAIL.
+          title=$(grep -o '<title>[^<]*' mstest.html || true)
+          echo "$title"
+          echo "$title" | grep -q 'MSTEST' || { echo "::error::minesweeper test page did not run"; exit 1; }
+          if echo "$title" | grep -q 'FAIL'; then echo "::error::minesweeper functional test failed"; exit 1; fi
           echo "all minesweeper assertions pass"
 
       - name: Render the classic site in headless Chrome

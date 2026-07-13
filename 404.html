@@ -36,7 +36,11 @@
     <p>Press any key to continue <span class="blink">_</span></p>
   </div>
   <script>
-    addEventListener("keydown", () => location.href = "/");
+    /* "Any key" must not swallow keyboard navigation or shortcuts. */
+    addEventListener("keydown", (e) => {
+      if (e.key === "Tab" || e.key === "Shift" || e.ctrlKey || e.metaKey || e.altKey) return;
+      location.href = "/";
+    });
   </script>
 </body>
 </html>

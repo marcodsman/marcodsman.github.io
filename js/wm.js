@@ -34,7 +34,7 @@
     el.innerHTML = `
       <div class="titlebar">
         <span class="t-ico">${iconMarkup(app.icon, 16)}</span>
-        <span class="t-text">${app.title}</span>
+        <span class="t-text">${escHtml(app.title)}</span>
         <button class="tb-btn mini" title="Minimize" aria-label="Minimize">${GLYPHS.min}</button>
         <button class="tb-btn maxi" title="Maximize" aria-label="Maximize">${GLYPHS.max}</button>
         <button class="tb-btn close" title="Close" aria-label="Close">${GLYPHS.close}</button>
@@ -44,7 +44,7 @@
 
     const btn = document.createElement("button");
     btn.className = "task-btn";
-    btn.innerHTML = `<span class="ti">${iconMarkup(app.icon, 15)}</span><span>${app.title}</span>`;
+    btn.innerHTML = `<span class="ti">${iconMarkup(app.icon, 15)}</span><span>${escHtml(app.title)}</span>`;
     btn.addEventListener("click", () => {
       const win = state.open.get(id);
       if (!win) return;
@@ -147,7 +147,7 @@
       const d = document.createElement("div");
       d.className = "icon";
       d.tabIndex = 0;
-      d.innerHTML = `<span class="ico">${iconMarkup(app.icon, 34)}</span><span class="lbl">${app.label || app.title}</span>`;
+      d.innerHTML = `<span class="ico">${iconMarkup(app.icon, 34)}</span><span class="lbl">${escHtml(app.label || app.title)}</span>`;
       const open = () => { openApp(id); d.classList.remove("sel"); };
       d.addEventListener("click", () => {
         document.querySelectorAll(".icon.sel").forEach((i) => i.classList.remove("sel"));
@@ -177,7 +177,7 @@
       if (!app) return;
       const item = document.createElement("div");
       item.className = "sm-item";
-      item.innerHTML = `<span class="ico">${iconMarkup(app.icon, 24)}</span>${app.menu || app.title}`;
+      item.innerHTML = `<span class="ico">${iconMarkup(app.icon, 24)}</span>${escHtml(app.menu || app.title)}`;
       item.addEventListener("click", () => { openApp(id); toggleStart(false); });
       left.appendChild(item);
     });
@@ -189,11 +189,11 @@
         item.target = "_blank";
         item.rel = "noopener";
         item.className = "sm-item";
-        item.innerHTML = `<span class="ico">${iconMarkup(entry.icon, 24)}</span>${entry.label}`;
+        item.innerHTML = `<span class="ico">${iconMarkup(entry.icon, 24)}</span>${escHtml(entry.label)}`;
       } else {
         item = document.createElement("div");
         item.className = "sm-item";
-        item.innerHTML = `<span class="ico">${iconMarkup(entry.icon, 24)}</span>${entry.label}`;
+        item.innerHTML = `<span class="ico">${iconMarkup(entry.icon, 24)}</span>${escHtml(entry.label)}`;
         item.addEventListener("click", () => { openApp(entry.open); toggleStart(false); });
       }
       right.appendChild(item);

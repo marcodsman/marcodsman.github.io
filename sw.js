@@ -1,6 +1,6 @@
 /* Marco XP root service worker.
    Bump CACHE on every deploy that changes shell assets: marco-xp-vN. */
-const CACHE = "marco-xp-v1";
+const CACHE = "marco-xp-v2";
 
 const SHELL = [
   "/",
@@ -41,8 +41,10 @@ self.addEventListener("fetch", (e) => {
     e.respondWith(
       fetch(e.request)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, copy));
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(e.request, copy));
+          }
           return res;
         })
         .catch(() => caches.match(e.request).then((hit) => hit || caches.match("/index.html")))
@@ -56,7 +58,7 @@ self.addEventListener("fetch", (e) => {
       caches.open(CACHE).then(async (c) => {
         const cached = await c.match(e.request);
         const refresh = fetch(e.request)
-          .then((res) => { c.put(e.request, res.clone()); return res; })
+          .then((res) => { if (res.ok) c.put(e.request, res.clone()); return res; })
           .catch(() => cached);
         return cached || refresh;
       })
@@ -70,8 +72,10 @@ self.addEventListener("fetch", (e) => {
       (hit) =>
         hit ||
         fetch(e.request).then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, copy));
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(e.request, copy));
+          }
           return res;
         })
     )

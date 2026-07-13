@@ -1,0 +1,48 @@
+name: site-check
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC — catches CodePen/Glitch link rot
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax-check all scripts
+        run: |
+          node --check js/icons.js
+          node --check js/apps.js
+          node --check js/wm.js
+          node --check sw.js
+          node --check classic/js/classic-render.js
+
+      - name: Boot the XP desktop in headless Chrome
+        run: |
+          python3 -m http.server 8931 &
+          sleep 1
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --virtual-time-budget=5000 --dump-dom http://localhost:8931/ > dom.html 2>/dev/null
+          grep -q 'class="window active"' dom.html || { echo "::error::desktop did not boot (no active window)"; exit 1; }
+          icons=$(grep -o 'class="icon"' dom.html | wc -l)
+          test "$icons" -ge 4 || { echo "::error::only $icons desktop icons rendered"; exit 1; }
+          grep -q 'task-btn' dom.html || { echo "::error::no taskbar button"; exit 1; }
+          echo "desktop boots with $icons icons"
+
+      - name: Render the classic site in headless Chrome
+        run: |
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --virtual-time-budget=5000 --dump-dom http://localhost:8931/classic/ > classic.html 2>/dev/null
+          grep -q 'project-tile' classic.html || { echo "::error::classic site rendered no projects"; exit 1; }
+          echo "classic site renders"
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check every outbound link the site actually renders
+        run: node .github/scripts/check-links.mjs

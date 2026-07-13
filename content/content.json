@@ -122,7 +122,7 @@
     "availability": "Not currently available for freelance work.",
     "socials": [
       { "id": "github", "label": "GitHub", "url": "https://github.com/marcodsman", "icon": "github" },
-      { "id": "freecodecamp", "label": "freeCodeCamp", "url": "https://www.freecodecamp.org/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695", "icon": "fcc" },
+      { "id": "freecodecamp", "label": "freeCodeCamp", "url": "https://www.freecodecamp.org/certification/fcce6dfa43f-4c14-4b56-bf31-aadd247d2695/full-stack", "icon": "fcc" },
       { "id": "codewars", "label": "Codewars", "url": "https://www.codewars.com/users/marcodsman", "icon": "/img/codewars2.svg" },
       { "id": "glitch", "label": "Glitch", "url": "https://glitch.com/@marcodsman", "icon": "/img/glitch-icon-white-transparent.png", "iconHover": "/img/glitch-icon-hover.png" }
     ]

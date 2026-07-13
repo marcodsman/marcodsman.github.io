@@ -1,6 +1,6 @@
 /* Marco XP root service worker.
    Bump CACHE on every deploy that changes shell assets: marco-xp-vN. */
-const CACHE = "marco-xp-v2";
+const CACHE = "marco-xp-v3";
 
 const SHELL = [
   "/",

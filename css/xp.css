@@ -241,7 +241,7 @@ textarea.notepad{
   color:#1b1b1b;text-decoration:none;
 }
 .sm-right .sm-item{color:#1b3a6b;font-weight:bold}
-.sm-item:hover{background:var(--sel);color:#fff !important}
+.sm-item:hover,.sm-item:focus{background:var(--sel);color:#fff !important;outline:none}
 .sm-item .ico{width:24px;height:24px;flex:none}
 .sm-item .ico svg{width:100%;height:100%}
 .sm-sep{border-top:1px solid #d9d9d9;margin:5px 8px}

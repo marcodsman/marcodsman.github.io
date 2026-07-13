@@ -172,13 +172,22 @@
     const right = document.getElementById("sm-right");
     left.innerHTML = "";
     right.innerHTML = "";
+    const wireMenuItem = (item, act) => {
+      item.setAttribute("role", "menuitem");
+      if (item.tagName !== "A") item.tabIndex = 0;
+      if (!act) return;
+      item.addEventListener("click", act);
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); act(); }
+      });
+    };
     menuLeft.forEach((id) => {
       const app = APPS[id];
       if (!app) return;
       const item = document.createElement("div");
       item.className = "sm-item";
       item.innerHTML = `<span class="ico">${iconMarkup(app.icon, 24)}</span>${escHtml(app.menu || app.title)}`;
-      item.addEventListener("click", () => { openApp(id); toggleStart(false); });
+      wireMenuItem(item, () => { openApp(id); toggleStart(false); });
       left.appendChild(item);
     });
     menuRight.forEach((entry) => {
@@ -190,11 +199,12 @@
         item.rel = "noopener";
         item.className = "sm-item";
         item.innerHTML = `<span class="ico">${iconMarkup(entry.icon, 24)}</span>${escHtml(entry.label)}`;
+        wireMenuItem(item);
       } else {
         item = document.createElement("div");
         item.className = "sm-item";
         item.innerHTML = `<span class="ico">${iconMarkup(entry.icon, 24)}</span>${escHtml(entry.label)}`;
-        item.addEventListener("click", () => { openApp(entry.open); toggleStart(false); });
+        wireMenuItem(item, () => { openApp(entry.open); toggleStart(false); });
       }
       right.appendChild(item);
     });
@@ -205,11 +215,31 @@
     startMenu.classList.toggle("open", on);
     startBtn.classList.toggle("pressed", on);
   }
-  startBtn.addEventListener("click", (e) => { e.stopPropagation(); toggleStart(); });
+  startBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleStart();
+    /* e.detail === 0 → activated via keyboard; hand focus into the menu. */
+    if (startMenu.classList.contains("open") && e.detail === 0) {
+      const first = startMenu.querySelector(".sm-item");
+      if (first) first.focus();
+    }
+  });
   document.addEventListener("click", (e) => {
     if (!e.target.closest("#start-menu") && !e.target.closest("#start-btn")) toggleStart(false);
   });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") toggleStart(false); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    if (startMenu.classList.contains("open") && startMenu.contains(document.activeElement)) startBtn.focus();
+    toggleStart(false);
+  });
+  startMenu.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    const items = [...startMenu.querySelectorAll(".sm-item")];
+    const i = items.indexOf(document.activeElement);
+    if (i === -1) return;
+    e.preventDefault();
+    items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus();
+  });
 
   /* ---------- Shutdown ---------- */
   document.getElementById("turn-off").addEventListener("click", () => {
